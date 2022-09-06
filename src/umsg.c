@@ -4,9 +4,7 @@
 
 #include <umsg.h>
 #include <umsg_port.h>
-
-#include "../msgs/sensors.h"
-#include "../msgs/control.h"
+#include <string.h>
 
 umsg_queue_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
 {
@@ -55,10 +53,12 @@ uint8_t umsg_receive(umsg_queue_handle_t queue, void* data, uint32_t timeout)
     return umsg_port_queue_receive(queue, data, timeout);
 }
 
-void umsg_peek(umsg_msg_metadata_t* msg, void* data)
+uint8_t umsg_peek(umsg_msg_metadata_t* msg, void* data, uint32_t size)
 {
     if(msg->counter > 0)
     {
-        data = msg->msg_value;
+        memcpy(data, msg->msg_value, size);
+        return 1;
     }
+    return 0;
 }

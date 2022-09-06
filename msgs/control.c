@@ -24,7 +24,7 @@ uint8_t umsg_control_setpoints_receive(umsg_queue_handle_t queue, msg_control_se
     return umsg_receive(queue, data, timeout);
 }
 
-void umsg_control_setpoints_peek(msg_control_setpoints_t* data)
+uint8_t umsg_control_setpoints_peek(msg_control_setpoints_t* data)
 {
-    umsg_peek(&umsg_control_msgs.control_setpoints, data);
+    return umsg_peek(&umsg_control_msgs.control_setpoints, data, sizeof(msg_control_setpoints_t));
 }

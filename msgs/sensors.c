@@ -25,7 +25,7 @@ uint8_t umsg_sensors_imu_receive(umsg_queue_handle_t queue, umsg_sensors_imu_t* 
 
 void umsg_sensors_imu_peek(umsg_sensors_imu_t* data)
 {
-    umsg_peek(&msg_sensor_imu, data);
+    umsg_peek(&msg_sensor_imu, data, sizeof(umsg_sensors_imu_t));
 }
 
 void * umsg_sensors_baro_subscribe(uint32_t prescaler, uint8_t length)
@@ -45,7 +45,7 @@ uint8_t umsg_sensors_baro_receive(umsg_queue_handle_t queue, umsg_sensors_baro_t
 
 void umsg_sensors_baro_peek(umsg_sensors_baro_t* data)
 {
-    umsg_peek(&msg_sensor_baro, data);
+    umsg_peek(&msg_sensor_baro, data, sizeof(umsg_sensors_baro_t));
 }
 
 void * umsg_sensors_mag_subscribe(uint32_t prescaler, uint8_t length)
@@ -65,5 +65,5 @@ uint8_t umsg_sensors_mag_receive(umsg_queue_handle_t queue, umsg_sensors_mag_t* 
 
 void umsg_sensors_mag_peek(umsg_sensors_mag_t* data)
 {
-    umsg_peek(&msg_sensor_mag, data);
+    umsg_peek(&msg_sensor_mag, data, sizeof(umsg_sensors_mag_t));
 }
