@@ -11,7 +11,9 @@ static void publisher(void* pvParameters);
 void main(void)
 {
     printf("Hello world!");
-    xTaskCreate(publisher, "publisher", 1000, NULL, 1, NULL);
+    xTaskCreate(publisher, "publisher", 1000, NULL, 2, NULL);
+
+    xPortStartScheduler();
 }
 
 
@@ -19,7 +21,7 @@ static void publisher(void* pvParameters)
 {
     while(1)
     {
-        printf("Hello world!");
+        printf("Hello From Task!");
         vTaskDelay(1000);
     }
 }

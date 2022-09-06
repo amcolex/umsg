@@ -39,32 +39,32 @@
 
 #define configUSE_PREEMPTION					1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION	1
-#define configUSE_IDLE_HOOK						1
-#define configUSE_TICK_HOOK						1
-#define configUSE_DAEMON_TASK_STARTUP_HOOK		1
-#define configTICK_RATE_HZ						( 1000 ) /* In this non-real time simulated environment the tick frequency has to be at least a multiple of the Win32 tick frequency, and therefore very slow. */
+#define configUSE_IDLE_HOOK						0
+#define configUSE_TICK_HOOK						0
+#define configUSE_DAEMON_TASK_STARTUP_HOOK		0
+#define configTICK_RATE_HZ						( 100 ) /* In this non-real time simulated environment the tick frequency has to be at least a multiple of the Win32 tick frequency, and therefore very slow. */
 #define configMINIMAL_STACK_SIZE				( ( unsigned short ) 70 ) /* In this simulated case, the stack only has to hold one small structure as the real stack is part of the win32 thread. */
 #define configTOTAL_HEAP_SIZE					( ( size_t ) ( 65 * 1024 ) )
 #define configMAX_TASK_NAME_LEN					( 12 )
-#define configUSE_TRACE_FACILITY				1
+#define configUSE_TRACE_FACILITY				0
 #define configUSE_16_BIT_TICKS					0
 #define configIDLE_SHOULD_YIELD					1
-#define configUSE_MUTEXES						1
+#define configUSE_MUTEXES						0
 #define configCHECK_FOR_STACK_OVERFLOW			0
-#define configUSE_RECURSIVE_MUTEXES				1
+#define configUSE_RECURSIVE_MUTEXES				0
 #define configQUEUE_REGISTRY_SIZE				20
-#define configUSE_APPLICATION_TASK_TAG			1
-#define configUSE_COUNTING_SEMAPHORES			1
+#define configUSE_APPLICATION_TASK_TAG			0
+#define configUSE_COUNTING_SEMAPHORES			0
 #define configUSE_ALTERNATIVE_API				0
 #define configUSE_QUEUE_SETS					1
 #define configUSE_TASK_NOTIFICATIONS			1
-#define configSUPPORT_STATIC_ALLOCATION			1
+#define configSUPPORT_STATIC_ALLOCATION			0
 
 /* Software timer related configuration options.  The maximum possible task
 priority is configMAX_PRIORITIES - 1.  The priority of the timer task is
 deliberately set higher to ensure it is correctly capped back to
 configMAX_PRIORITIES - 1. */
-#define configUSE_TIMERS						1
+#define configUSE_TIMERS						0
 #define configTIMER_TASK_PRIORITY				( configMAX_PRIORITIES - 1 )
 #define configTIMER_QUEUE_LENGTH				20
 #define configTIMER_TASK_STACK_DEPTH			( configMINIMAL_STACK_SIZE * 2 )
@@ -72,11 +72,7 @@ configMAX_PRIORITIES - 1. */
 #define configMAX_PRIORITIES					( 7 )
 
 /* Run time stats gathering configuration options. */
-unsigned long ulGetRunTimeCounterValue( void ); /* Prototype of function that returns run time counter. */
-void vConfigureTimerForRunTimeStats( void );	/* Prototype of function that initialises the run time counter. */
-#define configGENERATE_RUN_TIME_STATS			1
-#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() vConfigureTimerForRunTimeStats()
-#define portGET_RUN_TIME_COUNTER_VALUE() ulGetRunTimeCounterValue()
+#define configGENERATE_RUN_TIME_STATS			0
 
 /* Co-routine related configuration options. */
 #define configUSE_CO_ROUTINES 					0
@@ -110,16 +106,42 @@ functions anyway. */
 #define INCLUDE_xTaskGetHandle					1
 #define INCLUDE_eTaskGetState					1
 #define INCLUDE_xSemaphoreGetMutexHolder		1
-#define INCLUDE_xTimerPendFunctionCall			1
+#define INCLUDE_xTimerPendFunctionCall			0
 #define INCLUDE_xTaskAbortDelay					1
 
 #define configINCLUDE_MESSAGE_BUFFER_AMP_DEMO	0
 #if ( configINCLUDE_MESSAGE_BUFFER_AMP_DEMO == 1 )
-	extern void vGenerateCoreBInterrupt( void * xUpdatedMessageBuffer );
+extern void vGenerateCoreBInterrupt( void * xUpdatedMessageBuffer );
 	#define sbSEND_COMPLETED( pxStreamBuffer ) vGenerateCoreBInterrupt( pxStreamBuffer )
 #endif /* configINCLUDE_MESSAGE_BUFFER_AMP_DEMO */
 
 extern void vAssertCalled( unsigned long ulLine, const char * const pcFileName );
+
+#define projCOVERAGE_TEST 1
+#if( projCOVERAGE_TEST == 1 )
+/* Insert NOPs in empty decision paths to ensure both true and false paths
+	are being tested. */
+	#define mtCOVERAGE_TEST_MARKER() __asm volatile( "NOP" )
+
+	/* Ensure the tick count overflows during the coverage test. */
+	#define configINITIAL_TICK_COUNT 0xffffd800UL
+
+	/* Allows tests of trying to allocate more than the heap has free. */
+	#define configUSE_MALLOC_FAILED_HOOK			0
+
+	/* To test builds that remove the static qualifier for debug builds. */
+	#define portREMOVE_STATIC_QUALIFIER
+#else
+/* It is a good idea to define configASSERT() while developing.  configASSERT()
+uses the same semantics as the standard C assert() macro.  Don't define
+configASSERT() when performing code coverage tests though, as it is not
+intended to asserts() to fail, some some code is intended not to run if no
+errors are present. */
+#define configASSERT( x )
+
+#define configUSE_MALLOC_FAILED_HOOK			1
+
+#endif
 
 
 #endif /* FREERTOS_CONFIG_H */

@@ -8,11 +8,12 @@
 #include "../msgs/sensors.h"
 #include "../msgs/control.h"
 
-
 void * umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
 {
     if(msg->sub_list == NULL)
     {
+        msg->msg_value = umsg_port_malloc(size);
+
         msg->sub_list = umsg_port_malloc(sizeof(umsg_sub_t));
         msg->sub_list->queue_handle = umsg_port_queue_create(size,length);
         msg->sub_list->prescaler = prescaler;
@@ -52,4 +53,12 @@ void umsg_publish(umsg_msg_metadata_t* msg, void* data)
 uint8_t umsg_receive(umsg_queue_handle_t queue, void* data, uint32_t timeout)
 {
     return umsg_port_queue_receive(queue, data, timeout);
+}
+
+void umsg_peek(umsg_msg_metadata_t* msg, void* data)
+{
+    if(msg->counter > 0)
+    {
+        data = msg->msg_value;
+    }
 }
