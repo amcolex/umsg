@@ -21,7 +21,7 @@ typedef struct
     char* name;
 } umsg_msg_metadata_t;
 
-void * umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length);
+umsg_queue_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length);
 void umsg_publish(umsg_msg_metadata_t* msg, void* data);
 uint8_t umsg_receive(umsg_queue_handle_t queue, void* data, uint32_t timeout);
 void umsg_peek(umsg_msg_metadata_t* msg, void* data);

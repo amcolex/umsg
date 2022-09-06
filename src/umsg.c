@@ -8,7 +8,7 @@
 #include "../msgs/sensors.h"
 #include "../msgs/control.h"
 
-void * umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
+umsg_queue_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
 {
     if(msg->sub_list == NULL)
     {

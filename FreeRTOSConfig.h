@@ -41,7 +41,7 @@
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION	1
 #define configUSE_IDLE_HOOK						0
 #define configUSE_TICK_HOOK						0
-#define configUSE_DAEMON_TASK_STARTUP_HOOK		0
+#define configUSE_DAEMON_TASK_STARTUP_HOOK		1
 #define configTICK_RATE_HZ						( 100 ) /* In this non-real time simulated environment the tick frequency has to be at least a multiple of the Win32 tick frequency, and therefore very slow. */
 #define configMINIMAL_STACK_SIZE				( ( unsigned short ) 70 ) /* In this simulated case, the stack only has to hold one small structure as the real stack is part of the win32 thread. */
 #define configTOTAL_HEAP_SIZE					( ( size_t ) ( 65 * 1024 ) )
@@ -49,16 +49,16 @@
 #define configUSE_TRACE_FACILITY				0
 #define configUSE_16_BIT_TICKS					0
 #define configIDLE_SHOULD_YIELD					1
-#define configUSE_MUTEXES						0
+#define configUSE_MUTEXES						1
 #define configCHECK_FOR_STACK_OVERFLOW			0
-#define configUSE_RECURSIVE_MUTEXES				0
+#define configUSE_RECURSIVE_MUTEXES				1
 #define configQUEUE_REGISTRY_SIZE				20
-#define configUSE_APPLICATION_TASK_TAG			0
-#define configUSE_COUNTING_SEMAPHORES			0
+#define configUSE_APPLICATION_TASK_TAG			1
+#define configUSE_COUNTING_SEMAPHORES			1
 #define configUSE_ALTERNATIVE_API				0
 #define configUSE_QUEUE_SETS					1
 #define configUSE_TASK_NOTIFICATIONS			1
-#define configSUPPORT_STATIC_ALLOCATION			0
+#define configSUPPORT_STATIC_ALLOCATION			1
 
 /* Software timer related configuration options.  The maximum possible task
 priority is configMAX_PRIORITIES - 1.  The priority of the timer task is
@@ -117,7 +117,14 @@ extern void vGenerateCoreBInterrupt( void * xUpdatedMessageBuffer );
 
 extern void vAssertCalled( unsigned long ulLine, const char * const pcFileName );
 
-#define projCOVERAGE_TEST 1
+/* projCOVERAGE_TEST should be defined on the command line so this file can be
+used with multiple project configurations.  If it is
+ */
+#define projCOVERAGE_TEST 0
+#ifndef projCOVERAGE_TEST
+#error projCOVERAGE_TEST should be defined to 1 or 0 on the command line.
+#endif
+
 #if( projCOVERAGE_TEST == 1 )
 /* Insert NOPs in empty decision paths to ensure both true and false paths
 	are being tested. */
@@ -137,10 +144,11 @@ uses the same semantics as the standard C assert() macro.  Don't define
 configASSERT() when performing code coverage tests though, as it is not
 intended to asserts() to fail, some some code is intended not to run if no
 errors are present. */
-#define configASSERT( x )
+#define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __LINE__, __FILE__ )
 
-#define configUSE_MALLOC_FAILED_HOOK			1
+#define configUSE_MALLOC_FAILED_HOOK			0
 
+/* Include the FreeRTOS+Trace FreeRTOS trace macro definitions. */
 #endif
 
 

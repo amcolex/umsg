@@ -4,7 +4,7 @@
 
 #ifndef UMSG_SENSORS_H
 #define UMSG_SENSORS_H
-
+#include <umsg_types.h>
 typedef struct
 {
     float gyro[3];
