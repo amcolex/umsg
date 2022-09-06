@@ -121,39 +121,5 @@ functions anyway. */
 
 extern void vAssertCalled( unsigned long ulLine, const char * const pcFileName );
 
-/* projCOVERAGE_TEST should be defined on the command line so this file can be
-used with multiple project configurations.  If it is
- */
-#ifndef projCOVERAGE_TEST
-	#error projCOVERAGE_TEST should be defined to 1 or 0 on the command line.
-#endif
-
-#if( projCOVERAGE_TEST == 1 )
-	/* Insert NOPs in empty decision paths to ensure both true and false paths
-	are being tested. */
-	#define mtCOVERAGE_TEST_MARKER() __asm volatile( "NOP" )
-
-	/* Ensure the tick count overflows during the coverage test. */
-	#define configINITIAL_TICK_COUNT 0xffffd800UL
-
-	/* Allows tests of trying to allocate more than the heap has free. */
-	#define configUSE_MALLOC_FAILED_HOOK			0
-
-	/* To test builds that remove the static qualifier for debug builds. */
-	#define portREMOVE_STATIC_QUALIFIER
-#else
-	/* It is a good idea to define configASSERT() while developing.  configASSERT()
-	uses the same semantics as the standard C assert() macro.  Don't define
-	configASSERT() when performing code coverage tests though, as it is not
-	intended to asserts() to fail, some some code is intended not to run if no
-	errors are present. */
-	#define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __LINE__, __FILE__ )
-
-	#define configUSE_MALLOC_FAILED_HOOK			1
-
-	/* Include the FreeRTOS+Trace FreeRTOS trace macro definitions. */
-	#include "trcRecorder.h"
-#endif
-
 
 #endif /* FREERTOS_CONFIG_H */

@@ -8,14 +8,13 @@
 #include "../msgs/sensors.h"
 #include "../msgs/control.h"
 
-static umsg_msg_instance_t umsg_msg_instance;
 
-void * subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler)
+void * umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
 {
     if(msg->sub_list == NULL)
     {
         msg->sub_list = umsg_port_malloc(sizeof(umsg_sub_t));
-        msg->sub_list->queue_handle = umsg_port_queue_create(sizeof(void*));
+        msg->sub_list->queue_handle = umsg_port_queue_create(size,length);
         msg->sub_list->prescaler = prescaler;
         msg->sub_list->next_sub = NULL;
         return msg->sub_list->queue_handle;
@@ -28,14 +27,14 @@ void * subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler)
             sub = sub->next_sub;
         }
         sub->next_sub = umsg_port_malloc(sizeof(umsg_sub_t));
-        ((umsg_sub_t*)sub->next_sub)->queue_handle = umsg_port_queue_create(sizeof(void*));
+        ((umsg_sub_t*)sub->next_sub)->queue_handle = umsg_port_queue_create(size,length);
         ((umsg_sub_t*)sub->next_sub)->prescaler = prescaler;
         ((umsg_sub_t*)sub->next_sub)->next_sub = NULL;
         return ((umsg_sub_t*)sub->next_sub)->queue_handle;
     }
 }
 
-void publish(umsg_msg_metadata_t* msg, void* data)
+void umsg_publish(umsg_msg_metadata_t* msg, void* data)
 {
     msg->msg_value = data;
     msg->counter++;
@@ -50,14 +49,7 @@ void publish(umsg_msg_metadata_t* msg, void* data)
     }
 }
 
-
-
-inline void* umsg_control_setpoints_subscribe(uint32_t prescaler)
+uint8_t umsg_receive(umsg_queue_handle_t queue, void* data, uint32_t timeout)
 {
-    return subscribe(&umsg_msg_instance.control_setpoints, prescaler);
-}
-
-inline void umsg_control_setpoints_publish(msg_control_setpoints_t* data)
-{
-    publish(&umsg_msg_instance.control_setpoints, data);
+    return umsg_port_queue_receive(queue, data, timeout);
 }

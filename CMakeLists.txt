@@ -4,7 +4,7 @@ project(uMsg)
 add_library(uMsg STATIC
         src/umsg.c
         src/port_freertos.c
-        inc/umsg_port.h inc/umsg.h)
+        inc/umsg_port.h inc/umsg.h msgs/control.c inc/umsg_types.h test/runtime/main.c msgs/sensors.c)
 
 target_include_directories(uMsg PUBLIC msgs inc)
 
@@ -14,3 +14,8 @@ set(FREERTOS_PORT "MSVC_MINGW")
 add_subdirectory(FreeRTOS-Kernel)
 
 target_link_libraries(uMsg freertos_kernel)
+
+
+add_executable(uMsgTest test/runtime/main.c)
+
+target_link_libraries(uMsgTest uMsg)
