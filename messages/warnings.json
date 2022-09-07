@@ -1,11 +1,21 @@
 {
+  "enums": [
+    {
+      "name": "battery_state",
+      "enumerators": [
+        "battery_ok",
+        "battery_dead",
+        "battery_cold"
+      ]
+    }
+  ],
   "msgs": [
     {
-      "name": "warnings",
+      "name": "battery",
       "fields": [
         {
-          "name": "system_ok",
-          "type": "uint8_t"
+          "name": "state",
+          "type": "battery_state_t"
         },
         {
           "name": "system_critical",

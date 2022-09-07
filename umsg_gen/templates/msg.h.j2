@@ -4,6 +4,18 @@
 #include <umsg_types.h>
 
 // msg structure typedefs
+{%if topic_dict.enums %}
+
+{% for enum in topic_dict.enums%}
+typedef enum
+{
+    {%for val in enum.enumerators%}
+    {{val.upper()}}{{ "," if not loop.last else "" }}
+    {%endfor%}
+} {{enum.name}}_t;
+
+{%endfor%}
+{% endif %}
 {% for msg_dict in topic_dict.msgs %}
 typedef struct
 {
