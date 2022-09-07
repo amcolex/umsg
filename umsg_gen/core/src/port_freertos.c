@@ -16,7 +16,7 @@ umsg_queue_handle_t umsg_port_queue_create(uint32_t size, uint8_t length)
     return xQueueCreate(length, size);
 }
 
-void * umsg_port_queue_send(void * queue, void * data)
+void umsg_port_queue_send(void * queue, void * data)
 {
     xQueueSend((QueueHandle_t)queue, data, 0);
 }
