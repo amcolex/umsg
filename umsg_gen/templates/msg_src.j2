@@ -1,6 +1,6 @@
-// Generated with jinja2
+// Generated with umsg_gen on {{ date }}
 #include <umsg.h>
-#include <{{topic_dict['name']}}.h>
+#include <umsg_{{topic_dict['name']}}.h>
 
 // msg instances
 {% for msg_dict in topic_dict["msgs"] %}

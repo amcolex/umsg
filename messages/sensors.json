@@ -1,5 +1,4 @@
 {
-    "name": "sensors",
     "msgs": [
         {
             "msg_name": "imu",

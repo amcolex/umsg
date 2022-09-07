@@ -1,5 +1,4 @@
 {
-    "name": "control",
     "msgs": [
         {
             "msg_name": "setpoints",
