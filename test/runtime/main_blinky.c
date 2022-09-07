@@ -111,18 +111,18 @@ static void sub_task(void* params)
     umsg_sensors_imu_t msg;
     while(1) {
         umsg_sensors_imu_receive(queue,&msg,portMAX_DELAY);
-        printf("received! %f",msg.temp);
+        printf("received! %f",msg.temperature);
 
     }
 }
 static void pub_task(void* params)
 {
     uint32_t count = 0;
-    umsg_sensors_imu_t imu_data = {.accel= {1,2,3}, .gyro = {4,5,6}, .temp = 66};
+    umsg_sensors_imu_t imu_data = {.accel= {1,2,3}, .gyro = {4,5,6}, .temperature = 66};
     while(1)
     {
         count++;
-        imu_data.temp = count;
+        imu_data.temperature = count;
         umsg_sensors_imu_publish(&imu_data);
         vTaskDelay(10);
     }
