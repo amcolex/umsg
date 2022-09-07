@@ -11,7 +11,7 @@ add_subdirectory(umsg_lib)
 if("${UMSG_PORT}" STREQUAL "FREERTOS")
     # config and add freertos library
     set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-    set(FREERTOS_HEAP "5")
+    set(FREERTOS_HEAP "4")
     set(FREERTOS_PORT "MSVC_MINGW")
     add_subdirectory(FreeRTOS-Kernel)
     
@@ -20,8 +20,7 @@ if("${UMSG_PORT}" STREQUAL "FREERTOS")
     
     # create test executable
     add_executable(uMsgTest
-            test/freertos/main.c
-            test/freertos/main_blinky.c)
+            test/freertos/main.c)
     
     # link test executable with umsg & freertos
     target_link_libraries(uMsgTest uMsgLib freertos_kernel)
