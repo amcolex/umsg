@@ -1,20 +1,20 @@
 {
     "msgs": [
         {
-            "msg_name": "setpoints",
+            "name": "setpoints",
             "fields": [
                 {
-                    "member_name": "w",
+                    "name": "w",
                     "type": "float",
                     "length": 3
                 },
                 {
-                    "member_name": "vel_b",
+                    "name": "vel_b",
                     "type": "float",
                     "length": 3
                 },
                 {
-                    "member_name": "quat",
+                    "name": "quat",
                     "type": "float",
                     "length": 4
                 }

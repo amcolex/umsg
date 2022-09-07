@@ -6,9 +6,9 @@
 // msg structure typedefs
 typedef struct
 {
-    float w[3]; 
-    float vel_b[3]; 
-    float quat[4]; 
+float w[3];
+float vel_b[3];
+float quat[4];
 } umsg_control_setpoints_t;
 
 

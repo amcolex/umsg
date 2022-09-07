@@ -1,37 +1,34 @@
 {
     "msgs": [
         {
-            "msg_name": "imu",
+            "name": "imu",
             "fields": [
                 {
-                    "member_name": "gyro",
+                    "name": "gyro",
                     "type": "float",
                     "length": 3
                 },
                 {
-                    "member_name": "accel",
+                    "name": "accel",
                     "type": "float",
                     "length": 3
                 },
                 {
-                    "member_name": "temperature",
-                    "type": "float",
-                    "length": 1
+                    "name": "temperature",
+                    "type": "float"
                 }
             ]
         },
         {
-            "msg_name": "baro",
+            "name": "baro",
             "fields": [
                 {
-                    "member_name": "pressure",
-                    "type": "float",
-                    "length": 1
+                    "name": "pressure",
+                    "type": "float"
                 },
                 {
-                    "member_name": "temperature",
-                    "type": "float",
-                    "length": 1
+                    "name": "temperature",
+                    "type": "float"
                 }
             ]
         }

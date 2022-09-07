@@ -22,9 +22,9 @@ if __name__ == "__main__":
     env = Environment(loader=FileSystemLoader(templates_path))
     env.trim_blocks = True
     env.lstrip_blocks = True
-    inc_template = env.get_template(name='msg_inc.j2')
-    src_template = env.get_template(name='msg_src.j2')
-    cmake_template = env.get_template(name='CMakeLists.j2')
+    inc_template = env.get_template(name='msg.h.j2')
+    src_template = env.get_template(name='msg.c.j2')
+    cmake_template = env.get_template(name='CMakeLists.txt.j2')
 
     # find all topic json files
     files = glob.glob(f'{msg_def_path}\*.json')

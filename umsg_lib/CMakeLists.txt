@@ -4,6 +4,7 @@ add_library(uMsgLib STATIC
     # generated files
     src/control.c
     src/sensors.c
+    src/system.c
 )
 # select port
 if(NOT DEFINED UMSG_PORT)

@@ -1,0 +1,38 @@
+{
+	"msgs": [
+		{
+			"name": "warnings",
+			"fields": [
+				{
+					"name": "system_ok",
+					"type": "uint8_t"
+				},
+				{
+					"name": "system_critical",
+					"type": "uint8_t"
+				},
+				{
+					"type": "uint8_t",
+					"bitfield": [
+						{
+							"name"	: "low_battery",
+							"bits"	: 1
+						},
+						{
+							"name"	: "critical_battery",
+							"bits"	: 1
+						},
+						{
+							"name"	: "low_signal",
+							"bits"	: 1
+						},
+						{
+							"name"	: "high_temperature",
+							"bits"	: 1
+						}
+					]
+				}
+			]
+		}
+	]
+}

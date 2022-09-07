@@ -6,15 +6,15 @@
 // msg structure typedefs
 typedef struct
 {
-    float gyro[3]; 
-    float accel[3]; 
-    float temperature; 
+float gyro[3];
+float accel[3];
+float temperature;
 } umsg_sensors_imu_t;
 
 typedef struct
 {
-    float pressure; 
-    float temperature; 
+float pressure;
+float temperature;
 } umsg_sensors_baro_t;
 
 
