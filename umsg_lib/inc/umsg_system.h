@@ -6,9 +6,9 @@
 // msg structure typedefs
 typedef struct
 {
-uint8_t system_ok;
-uint8_t system_critical;
-uint8_t low_battery : 1, critical_battery : 1, low_signal : 1, high_temperature : 1;
+    uint8_t system_ok;
+    uint8_t system_critical;
+    uint8_t low_battery : 1, critical_battery : 1, low_signal : 1, high_temperature : 1;
 } umsg_system_warnings_t;
 
 

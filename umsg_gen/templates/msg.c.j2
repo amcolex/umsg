@@ -1,16 +1,16 @@
 // Generated with umsg_gen on {{ date }}
 #include <umsg.h>
-#include <umsg_{{topic_dict['name']}}.h>
+#include <umsg_{{topic_dict.name}}.h>
 
 // msg instances
-{% for msg_dict in topic_dict["msgs"] %}
-{% set prefix = topic_dict["name"]+'_'+msg_dict["name"]%}
+{% for msg_dict in topic_dict.msgs %}
+{% set prefix = topic_dict.name+'_'+msg_dict.name%}
 static umsg_msg_metadata_t msg_{{prefix}} = {.name = "{{prefix}}"};
 {% endfor %}
 
 // msg api's
-{% for msg_dict in topic_dict["msgs"] %}
-{% set prefix = topic_dict["name"]+'_'+msg_dict["name"]%}
+{% for msg_dict in topic_dict.msgs %}
+{% set prefix = topic_dict.name+'_'+msg_dict.name%}
 // {{prefix}}
 umsg_queue_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
 {

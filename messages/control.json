@@ -1,24 +1,24 @@
 {
-    "msgs": [
+  "msgs": [
+    {
+      "name": "setpoints",
+      "fields": [
         {
-            "name": "setpoints",
-            "fields": [
-                {
-                    "name": "w",
-                    "type": "float",
-                    "length": 3
-                },
-                {
-                    "name": "vel_b",
-                    "type": "float",
-                    "length": 3
-                },
-                {
-                    "name": "quat",
-                    "type": "float",
-                    "length": 4
-                }
-            ]
+          "name": "w",
+          "type": "float",
+          "length": 3
+        },
+        {
+          "name": "vel_b",
+          "type": "float",
+          "length": 3
+        },
+        {
+          "name": "quat",
+          "type": "float",
+          "length": 4
         }
-    ]
+      ]
+    }
+  ]
 }

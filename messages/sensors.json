@@ -1,36 +1,36 @@
 {
-    "msgs": [
+  "msgs": [
+    {
+      "name": "imu",
+      "fields": [
         {
-            "name": "imu",
-            "fields": [
-                {
-                    "name": "gyro",
-                    "type": "float",
-                    "length": 3
-                },
-                {
-                    "name": "accel",
-                    "type": "float",
-                    "length": 3
-                },
-                {
-                    "name": "temperature",
-                    "type": "float"
-                }
-            ]
+          "name": "gyro",
+          "type": "float",
+          "length": 3
         },
         {
-            "name": "baro",
-            "fields": [
-                {
-                    "name": "pressure",
-                    "type": "float"
-                },
-                {
-                    "name": "temperature",
-                    "type": "float"
-                }
-            ]
+          "name": "accel",
+          "type": "float",
+          "length": 3
+        },
+        {
+          "name": "temperature",
+          "type": "float"
         }
-    ]
+      ]
+    },
+    {
+      "name": "baro",
+      "fields": [
+        {
+          "name": "pressure",
+          "type": "float"
+        },
+        {
+          "name": "temperature",
+          "type": "float"
+        }
+      ]
+    }
+  ]
 }
