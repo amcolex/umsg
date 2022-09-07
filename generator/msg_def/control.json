@@ -1,0 +1,25 @@
+{
+    "name": "control",
+    "msgs": [
+        {
+            "msg_name": "setpoints",
+            "fields": [
+                {
+                    "member_name": "w",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "member_name": "vel_b",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "member_name": "quat",
+                    "type": "float",
+                    "length": 4
+                }
+            ]
+        }
+    ]
+}

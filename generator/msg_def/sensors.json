@@ -1,0 +1,40 @@
+{
+    "name": "sensors",
+    "msgs": [
+        {
+            "msg_name": "imu",
+            "fields": [
+                {
+                    "member_name": "gyro",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "member_name": "accel",
+                    "type": "float",
+                    "length": 3
+                },
+                {
+                    "member_name": "temperature",
+                    "type": "float",
+                    "length": 1
+                }
+            ]
+        },
+        {
+            "msg_name": "baro",
+            "fields": [
+                {
+                    "member_name": "pressure",
+                    "type": "float",
+                    "length": 1
+                },
+                {
+                    "member_name": "temperature",
+                    "type": "float",
+                    "length": 1
+                }
+            ]
+        }
+    ]
+}

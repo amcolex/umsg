@@ -1,0 +1,26 @@
+// Generated with Jinja2
+
+#pragma once
+#include <umsg_types.h>
+
+// msg structure typedefs
+{% for msg_dict in topic_dict["msgs"] %}
+typedef struct
+{
+    {% for field in msg_dict["fields"] %}
+    {{field["type"]}} {{field["member_name"]}}{% if field["length"]>1 %}[{{field["length"]}}]{% endif %}; 
+    {% endfor %}
+} umsg_{{topic_dict["name"]}}_{{msg_dict["msg_name"]}}_t;
+
+{% endfor %}
+
+// api function headers
+{% for msg_dict in topic_dict["msgs"] %}
+{% set prefix = topic_dict["name"]+'_'+msg_dict["msg_name"]%}
+umsg_queue_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length);
+void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data);
+uint8_t umsg_{{prefix}}_receive(umsg_queue_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
+uint8_t umsg_{{prefix}}_peek(msg_{{prefix}}_t* data);
+
+{% endfor %}
+
