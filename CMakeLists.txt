@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(uMsgTest)
 
-# Choose between "POSIX" and "FREERTOS"
-
+# Choose UMSG port
 set(UMSG_PORT "FREERTOS")
 
 # config and add umsg library
@@ -27,16 +26,3 @@ if("${UMSG_PORT}" STREQUAL "FREERTOS")
     # link test executable with umsg & freertos
     target_link_libraries(uMsgTest uMsgLib freertos_kernel)
 endif()
-
-# POSIX/Linux Test Executable
-if ("${UMSG_PORT}" STREQUAL "POSIX")
-    # create test executable
-    add_executable(uMsgTest
-            test/posix/main.c)
-
-    target_compile_options(uMsgLib PUBLIC -lrt)
-    target_link_options(uMsgLib PUBLIC -lrt)
-
-    # link test executable with umsg
-    target_link_libraries(uMsgTest uMsgLib)
-endif ()

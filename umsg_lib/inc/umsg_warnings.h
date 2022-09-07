@@ -10,7 +10,7 @@ typedef enum
     BATTERY_OK,
     BATTERY_DEAD,
     BATTERY_COLD
-} battery_state_t;
+} battery_state_t_t;
 
 typedef struct
 {

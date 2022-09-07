@@ -1,7 +1,7 @@
 {
   "enums": [
     {
-      "name": "battery_state",
+      "name": "battery_state_t",
       "enumerators": [
         "battery_ok",
         "battery_dead",
