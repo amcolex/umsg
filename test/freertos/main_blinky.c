@@ -111,7 +111,7 @@ static void sub_task(void* params)
     umsg_sensors_imu_t msg;
     while(1) {
         umsg_sensors_imu_receive(queue,&msg,portMAX_DELAY);
-        printf("received! %f",msg.temperature);
+        printf("received imu data! Counter: %f\n",msg.temperature);
 
     }
 }

@@ -16,7 +16,9 @@ if("${UMSG_PORT}" STREQUAL "FREERTOS")
             core/src/port_freertos.c
     )
 elseif("${UMSG_PORT}" STREQUAL "POSIX")
-    # TODO: add posix port
+        target_sources(uMsgLib PRIVATE
+                core/src/port_posix.c
+        )
 endif()
 
 # add includes

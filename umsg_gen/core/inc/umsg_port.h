@@ -5,7 +5,7 @@
 #ifndef UMSG_UMSG_PORT_H
 #define UMSG_UMSG_PORT_H
 
-#include <stdint.h>
+#include <umsg_types.h>
 
 void * umsg_port_malloc(uint32_t size);
 void * umsg_port_queue_create(uint32_t size, uint8_t length);

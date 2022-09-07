@@ -1,23 +1,42 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.15)
 project(uMsgTest)
 
-# config and add umsg library
+# Choose between "POSIX" and "FREERTOS"
+
 set(UMSG_PORT "FREERTOS")
+
+# config and add umsg library
 add_subdirectory(umsg_lib)
 
-# config and add freertos library
-set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-set(FREERTOS_HEAP "5")
-set(FREERTOS_PORT "MSVC_MINGW")
-add_subdirectory(FreeRTOS-Kernel)
+# FreeRTOS Test Executable
+if("${UMSG_PORT}" STREQUAL "FREERTOS")
+    # config and add freertos library
+    set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    set(FREERTOS_HEAP "5")
+    set(FREERTOS_PORT "MSVC_MINGW")
+    add_subdirectory(FreeRTOS-Kernel)
+    
+    # link umsg with freertos
+    target_link_libraries(uMsgLib freertos_kernel)
+    
+    # create test executable
+    add_executable(uMsgTest
+            test/freertos/main.c
+            test/freertos/main_blinky.c)
+    
+    # link test executable with umsg & freertos
+    target_link_libraries(uMsgTest uMsgLib freertos_kernel)
+endif()
 
-# link umsg with freertos
-target_link_libraries(uMsgLib freertos_kernel)
+# POSIX/Linux Test Executable
+if ("${UMSG_PORT}" STREQUAL "POSIX")
+    # create test executable
+    add_executable(uMsgTest
+            test/posix/main.c)
 
-# create test executable
-add_executable(uMsgTest
-        test/runtime/main.c
-        test/runtime/main_blinky.c)
+    target_compile_options(uMsgLib PUBLIC -lrt)
+    target_link_options(uMsgLib PUBLIC -lrt)
 
-# link test executable with umsg & freertos
-target_link_libraries(uMsgTest uMsgLib freertos_kernel)
+    # link test executable with umsg
+    target_link_libraries(uMsgTest uMsgLib)
+endif ()
