@@ -88,7 +88,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include <sensors.h>
+#include <umsg_sensors.h>
 
 static void pub_task(void* params);
 static void sub_task(void* params);
