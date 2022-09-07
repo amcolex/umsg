@@ -12,7 +12,7 @@ typedef enum
     {%for val in enum.enumerators%}
     {{val.upper()}}{{ "," if not loop.last else "" }}
     {%endfor%}
-} {{enum.name}}_t;
+} {{enum.name}};
 
 {%endfor%}
 {% endif %}

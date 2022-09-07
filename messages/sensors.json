@@ -1,34 +1,58 @@
 {
+  "enums": [
+    {
+      "name": "battery_state_t",
+      "enumerators": [
+        "battery_ok",
+        "battery_dead",
+        "battery_cold"
+      ]
+    }
+  ],
   "msgs": [
     {
-      "name": "imu",
+      "name": "battery",
       "fields": [
         {
-          "name": "gyro",
-          "type": "float",
-          "length": 3
+          "name": "state",
+          "type": "battery_state_t"
         },
         {
-          "name": "accel",
-          "type": "float",
-          "length": 3
-        },
-        {
-          "name": "temperature",
-          "type": "float"
-        }
-      ]
-    },
-    {
-      "name": "baro",
-      "fields": [
-        {
-          "name": "pressure",
-          "type": "float"
-        },
-        {
-          "name": "temperature",
-          "type": "float"
+          "type": "uint8_t",
+          "bitfield": [
+            {
+              "name": "low_battery",
+              "bits": 1
+            },
+            {
+              "name": "critical_battery",
+              "bits": 1
+            },
+            {
+              "name": "high_temperature",
+              "bits": 1
+            },
+            {
+              "name": "low_temperature",
+              "bits": 1
+            },
+            {
+              "name": "charging",
+              "bits": 1
+            },
+            {
+              "name": "discharging",
+              "bits": 1
+            },
+            {
+              "name": "full",
+              "bits": 1
+            },
+            {
+              "name": "not_present",
+              "bits": 1
+            }
+          ]
         }
       ]
     }

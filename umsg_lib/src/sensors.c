@@ -3,43 +3,24 @@
 #include <umsg_sensors.h>
 
 // msg instances
-static umsg_msg_metadata_t msg_sensors_imu = {.name = "sensors_imu"};
-static umsg_msg_metadata_t msg_sensors_baro = {.name = "sensors_baro"};
+static umsg_msg_metadata_t msg_sensors_battery = {.name = "sensors_battery"};
 
 // msg api's
-// sensors_imu
-umsg_queue_handle_t umsg_sensors_imu_subscribe(uint32_t prescaler, uint8_t length)
+// sensors_battery
+umsg_queue_handle_t umsg_sensors_battery_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_sensors_imu, prescaler, sizeof(umsg_sensors_imu_t), length);
+    return umsg_subscribe(&msg_sensors_battery, prescaler, sizeof(umsg_sensors_battery_t), length);
 }
-void umsg_sensors_imu_publish(umsg_sensors_imu_t* data)
+void umsg_sensors_battery_publish(umsg_sensors_battery_t* data)
 {
-    umsg_publish(&msg_sensors_imu, data);
+    umsg_publish(&msg_sensors_battery, data);
 }
-uint8_t umsg_sensors_imu_receive(umsg_queue_handle_t queue, umsg_sensors_imu_t* data, uint32_t timeout)
+uint8_t umsg_sensors_battery_receive(umsg_queue_handle_t queue, umsg_sensors_battery_t* data, uint32_t timeout)
 {
     return umsg_receive(queue, data, timeout);
 }
-uint8_t umsg_sensors_imu_peek(umsg_sensors_imu_t* data)
+uint8_t umsg_sensors_battery_peek(umsg_sensors_battery_t* data)
 {
-    return umsg_peek(&msg_sensors_imu, data, sizeof(umsg_sensors_imu_t));
-}
-
-// sensors_baro
-umsg_queue_handle_t umsg_sensors_baro_subscribe(uint32_t prescaler, uint8_t length)
-{
-    return umsg_subscribe(&msg_sensors_baro, prescaler, sizeof(umsg_sensors_baro_t), length);
-}
-void umsg_sensors_baro_publish(umsg_sensors_baro_t* data)
-{
-    umsg_publish(&msg_sensors_baro, data);
-}
-uint8_t umsg_sensors_baro_receive(umsg_queue_handle_t queue, umsg_sensors_baro_t* data, uint32_t timeout)
-{
-    return umsg_receive(queue, data, timeout);
-}
-uint8_t umsg_sensors_baro_peek(umsg_sensors_baro_t* data)
-{
-    return umsg_peek(&msg_sensors_baro, data, sizeof(umsg_sensors_baro_t));
+    return umsg_peek(&msg_sensors_battery, data, sizeof(umsg_sensors_battery_t));
 }
 

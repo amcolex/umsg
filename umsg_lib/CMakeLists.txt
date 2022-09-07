@@ -2,9 +2,9 @@
 add_library(uMsgLib STATIC
     core/src/umsg.c
     # generated files
+    src/battery.c
     src/control.c
     src/sensors.c
-    src/warnings.c
 )
 # select port
 if(NOT DEFINED UMSG_PORT)

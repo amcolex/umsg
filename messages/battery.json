@@ -5,21 +5,17 @@
       "enumerators": [
         "battery_ok",
         "battery_dead",
-        "battery_cold"
+        "battery_low"
       ]
     }
   ],
   "msgs": [
     {
-      "name": "battery",
+      "name": "state",
       "fields": [
         {
           "name": "state",
           "type": "battery_state_t"
-        },
-        {
-          "name": "system_critical",
-          "type": "uint8_t"
         },
         {
           "type": "uint8_t",
@@ -33,11 +29,27 @@
               "bits": 1
             },
             {
-              "name": "low_signal",
+              "name": "high_temperature",
               "bits": 1
             },
             {
-              "name": "high_temperature",
+              "name": "low_temperature",
+              "bits": 1
+            },
+            {
+              "name": "charging",
+              "bits": 1
+            },
+            {
+              "name": "discharging",
+              "bits": 1
+            },
+            {
+              "name": "full",
+              "bits": 1
+            },
+            {
+              "name": "not_present",
               "bits": 1
             }
           ]
