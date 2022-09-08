@@ -7,9 +7,9 @@ include(CTest)
 # uses system installed version of uMsg-gen
 # if missing, install with >pip install umsg-gen
 # generate as umsg_lib directory
-execute_process(COMMAND umsg-gen -d messages -o umsg_lib
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMAND_ECHO STDOUT)
+
+#execute_process(COMMAND umsg-gen -d messages -o umsg_lib
+#                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Choose umsg port
 set(UMSG_PORT "FREERTOS")

@@ -13,10 +13,11 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, u
         msg->msg_value = umsg_port_malloc(size);
 
         msg->sub_list = umsg_port_malloc(sizeof(umsg_sub_t));
-        msg->sub_list->queue_handle = umsg_port_queue_create(size,length);
+        msg->sub_list->sub_handle = umsg_port_create(size,length);
         msg->sub_list->prescaler = prescaler;
+        msg->sub_list->length = length;
         msg->sub_list->next_sub = NULL;
-        return msg->sub_list->queue_handle;
+        return msg->sub_list->sub_handle;
     }
     else
     {
@@ -26,10 +27,11 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, u
             sub = sub->next_sub;
         }
         sub->next_sub = umsg_port_malloc(sizeof(umsg_sub_t));
-        ((umsg_sub_t*)sub->next_sub)->queue_handle = umsg_port_queue_create(size,length);
+        ((umsg_sub_t*)sub->next_sub)->sub_handle = umsg_port_create(size,length);
         ((umsg_sub_t*)sub->next_sub)->prescaler = prescaler;
+        ((umsg_sub_t*)sub->next_sub)->length = length;
         ((umsg_sub_t*)sub->next_sub)->next_sub = NULL;
-        return ((umsg_sub_t*)sub->next_sub)->queue_handle;
+        return ((umsg_sub_t*)sub->next_sub)->sub_handle;
     }
 }
 
@@ -42,7 +44,7 @@ void umsg_publish(umsg_msg_metadata_t* msg, void* data)
     {
         if(msg->counter % sub->prescaler == 0)
         {
-            umsg_port_queue_send(sub->queue_handle, data);
+            umsg_port_send(sub, data);
         }
         sub = sub->next_sub;
     }
@@ -50,7 +52,7 @@ void umsg_publish(umsg_msg_metadata_t* msg, void* data)
 
 uint8_t umsg_receive(umsg_sub_handle_t queue, void* data, uint32_t timeout)
 {
-    return umsg_port_queue_receive(queue, data, timeout);
+    return umsg_port_receive(queue, data, timeout);
 }
 
 uint8_t umsg_peek(umsg_msg_metadata_t* msg, void* data, uint32_t size)

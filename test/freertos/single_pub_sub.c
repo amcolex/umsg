@@ -1,6 +1,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include <umsg_sensors.h>
+#include <stdio.h>
 
 static void pub_task(void* params);
 static void sub_task(void* params);
@@ -21,6 +22,7 @@ static void sub_task(void* params)
     umsg_sensors_imu_t msg;
     while(1) {
         umsg_sensors_imu_receive(sub,&msg,portMAX_DELAY);
+        printf("Received IMU Data!");
         exit(0);
     }
 }

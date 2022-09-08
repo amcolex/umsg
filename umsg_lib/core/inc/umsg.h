@@ -8,8 +8,9 @@
 
 typedef struct
 {
-    umsg_sub_handle_t queue_handle;
+    umsg_sub_handle_t sub_handle;
     uint32_t prescaler;
+    uint8_t length;
     void* next_sub;
 } umsg_sub_t;
 
