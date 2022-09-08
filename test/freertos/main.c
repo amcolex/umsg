@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <conio.h>
 #include "FreeRTOS.h"
 #include "task.h"
 #include <umsg_sensors.h>
@@ -23,7 +22,7 @@ int main( void )
 
 static void sub_task(void* params)
 {
-    umsg_queue_handle_t queue = umsg_sensors_imu_subscribe(1,1);
+    umsg_sub_handle_t queue = umsg_sensors_imu_subscribe(1,1);
     umsg_sensors_imu_t msg;
     while(1) {
         umsg_sensors_imu_receive(queue,&msg,portMAX_DELAY);
@@ -34,13 +33,13 @@ static void sub_task(void* params)
 
 static void sub_task2(void* params)
 {
-    umsg_queue_handle_t queue = umsg_battery_state_subscribe(1,1);
-    umsg_queue_handle_t imu_queue = umsg_sensors_imu_subscribe(1,1);
+    umsg_sub_handle_t battery_sub = umsg_battery_state_subscribe(1,1);
+    umsg_sub_handle_t imu_sub = umsg_sensors_imu_subscribe(1,1);
     umsg_battery_state_t msg;
     umsg_sensors_imu_t imu_msg;
     while(1) {
-        umsg_battery_state_receive(queue,&msg,portMAX_DELAY);
-        umsg_sensors_imu_receive(imu_queue,&imu_msg,portMAX_DELAY);
+        umsg_battery_state_receive(battery_sub,&msg,portMAX_DELAY);
+        umsg_sensors_imu_receive(imu_sub,&imu_msg,portMAX_DELAY);
         printf("received battery state & imu! Counter: %d\n",msg.state);
 
     }

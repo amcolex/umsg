@@ -7,6 +7,6 @@
 #include <stdint.h>
 #include <stddef.h>
 
-typedef void* umsg_queue_handle_t;
+typedef void* umsg_sub_handle_t;
 
 #endif //UMSG_UMSG_TYPES_H

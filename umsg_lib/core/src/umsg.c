@@ -6,7 +6,7 @@
 #include <umsg_port.h>
 #include <string.h>
 
-umsg_queue_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
+umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint32_t prescaler, uint32_t size, uint8_t length)
 {
     if(msg->sub_list == NULL)
     {
@@ -48,7 +48,7 @@ void umsg_publish(umsg_msg_metadata_t* msg, void* data)
     }
 }
 
-uint8_t umsg_receive(umsg_queue_handle_t queue, void* data, uint32_t timeout)
+uint8_t umsg_receive(umsg_sub_handle_t queue, void* data, uint32_t timeout)
 {
     return umsg_port_queue_receive(queue, data, timeout);
 }

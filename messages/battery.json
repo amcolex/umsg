@@ -1,7 +1,7 @@
 {
   "enums": [
     {
-      "name": "battery_state_t",
+      "name": "battery_state",
       "enumerators": [
         "battery_ok",
         "battery_dead",
@@ -15,10 +15,10 @@
       "fields": [
         {
           "name": "state",
-          "type": "battery_state_t"
+          "type": "battery_state"
         },
         {
-          "type": "uint8_t",
+          "type": "uint8",
           "bitfield": [
             {
               "name": "low_battery",

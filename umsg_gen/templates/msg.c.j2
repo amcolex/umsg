@@ -12,7 +12,7 @@ static umsg_msg_metadata_t msg_{{prefix}} = {.name = "{{prefix}}"};
 {% for msg_dict in topic_dict.msgs %}
 {% set prefix = topic_dict.name+'_'+msg_dict.name%}
 // {{prefix}}
-umsg_queue_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
+umsg_sub_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
 {
     return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length);
 }
@@ -20,7 +20,7 @@ void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data)
 {
     umsg_publish(&msg_{{prefix}}, data);
 }
-uint8_t umsg_{{prefix}}_receive(umsg_queue_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
+uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
 {
     return umsg_receive(queue, data, timeout);
 }
