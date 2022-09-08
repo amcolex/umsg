@@ -4,8 +4,8 @@
       "name": "battery_state",
       "enumerators": [
         "battery_ok",
-        "battery_dead",
-        "battery_low"
+        "battery_low",
+        "battery_dead"
       ]
     }
   ],

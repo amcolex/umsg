@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.15)
 project(uMsgTest)
 
-# Choose UMSG port
+# we'll be running tests
+include(CTest)
+
+# uses system installed version of uMsg-gen
+# if missing, install with >pip install umsg-gen
+# generate as umsg_lib directory
+execute_process(COMMAND umsg-gen -d messages -o umsg_lib
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMAND_ECHO STDOUT)
+
+# Choose umsg port
 set(UMSG_PORT "FREERTOS")
 
 # config and add umsg library
@@ -17,14 +27,10 @@ add_subdirectory(FreeRTOS-Kernel)
 # link umsg with freertos
 target_link_libraries(uMsgLib freertos_kernel)
 
-# create test executable
+# create and link test executables
 add_executable(uMsgTest
         test/freertos/single_pub_sub.c)
-
-# link test executable with umsg & freertos
 target_link_libraries(uMsgTest uMsgLib freertos_kernel)
-
-include(CTest)
 add_test(NAME uMsgTest COMMAND uMsgTest)
 
 

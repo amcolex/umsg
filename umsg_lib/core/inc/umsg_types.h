@@ -6,6 +6,7 @@
 #define UMSG_UMSG_TYPES_H
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef void* umsg_sub_handle_t;
 
