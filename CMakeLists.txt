@@ -19,7 +19,7 @@ target_link_libraries(uMsgLib freertos_kernel)
 
 # create test executable
 add_executable(uMsgTest
-        test/freertos/main.c)
+        test/freertos/single_pub_sub.c)
 
 # link test executable with umsg & freertos
 target_link_libraries(uMsgTest uMsgLib freertos_kernel)

@@ -42,7 +42,6 @@ if __name__ == "__main__":
     sources = []
     for file in files:
         # load topic json file
-        print(f'generating {file}...')
         f = open(file)
         topic_dict = json.load(f)
 
