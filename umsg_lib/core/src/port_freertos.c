@@ -3,7 +3,7 @@
 //
 #include <umsg.h>
 #include <FreeRTOS.h>
-#include <Queue.h>
+#include <queue.h>
 #include <stdint.h>
 
 // obtained from cmsis core.h. All cortex M processors have this register at this address
