@@ -19,9 +19,9 @@ add_subdirectory(umsg_lib)
 
 # FreeRTOS Test Executable
 # config and add freertos library
-set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-set(FREERTOS_HEAP "4")
-set(FREERTOS_PORT "MSVC_MINGW")
+set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "FreeRTOS Directory")
+set(FREERTOS_HEAP "4" CACHE STRING "Memory heap type")
+set(FREERTOS_PORT "MSVC_MINGW" CACHE STRING "FreeRTOS Port")
 add_subdirectory(FreeRTOS-Kernel)
 
 # link umsg with freertos
