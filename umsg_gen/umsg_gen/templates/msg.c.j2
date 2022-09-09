@@ -1,0 +1,32 @@
+// Generated with umsg_gen on {{ date }}
+#include <umsg.h>
+#include <umsg_{{topic_dict.name}}.h>
+
+// msg instances
+{% for msg_dict in topic_dict.msgs %}
+{% set prefix = topic_dict.name+'_'+msg_dict.name%}
+static umsg_msg_metadata_t msg_{{prefix}} = {.name = "{{prefix}}"};
+{% endfor %}
+
+// msg api's
+{% for msg_dict in topic_dict.msgs %}
+{% set prefix = topic_dict.name+'_'+msg_dict.name%}
+// {{prefix}}
+umsg_sub_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
+{
+    return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length);
+}
+void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data)
+{
+    umsg_publish(&msg_{{prefix}}, data);
+}
+uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
+{
+    return umsg_receive(queue, data, timeout);
+}
+uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data)
+{
+    return umsg_peek(&msg_{{prefix}}, data, sizeof(umsg_{{prefix}}_t));
+}
+
+{% endfor %}
