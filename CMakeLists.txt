@@ -4,12 +4,9 @@ project(uMsgTest)
 # we'll be running tests
 include(CTest)
 
-# uses system installed version of uMsg-gen
-# if missing, install with >pip install umsg-gen
-# generate as umsg_lib directory
-
-#execute_process(COMMAND umsg-gen -d messages -o umsg_lib
-#                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+# generate umsg_lib directory
+execute_process(COMMAND python .\\umsg_gen\\umsg_gen\\umsg_gen.py -d ./messages -o ./umsg_lib
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Choose umsg port
 set(UMSG_PORT "FREERTOS")
@@ -21,13 +18,7 @@ add_subdirectory(umsg_lib)
 # config and add freertos library
 set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "FreeRTOS Directory")
 set(FREERTOS_HEAP "4" CACHE STRING "Memory heap type")
-
-# if running on windows
-if(WIN32)
-    set(FREERTOS_PORT "MSVC_MINGW" CACHE STRING "FreeRTOS Port")
-else()
-    set(FREERTOS_PORT "GCC_POSIX" CACHE STRING "FreeRTOS Port")
-endif()
+set(FREERTOS_PORT "MSVC_MINGW" CACHE STRING "FreeRTOS Port")
 
 add_subdirectory(FreeRTOS-Kernel)
 
