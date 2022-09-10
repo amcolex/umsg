@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-09
+// Generated with umsg_gen on 2022-09-10
 #pragma once
 #include <umsg_types.h>
 

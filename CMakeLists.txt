@@ -26,9 +26,19 @@ add_subdirectory(FreeRTOS-Kernel)
 target_link_libraries(uMsgLib freertos_kernel)
 
 # create and link test executables
-add_executable(uMsgTest
+add_executable(test_single_publisher_single_subscriber
         test/freertos/single_pub_sub.c)
-target_link_libraries(uMsgTest uMsgLib freertos_kernel)
-add_test(NAME uMsgTest COMMAND uMsgTest)
+target_link_libraries(test_single_publisher_single_subscriber uMsgLib freertos_kernel)
+add_test(NAME test_single_publisher_single_subscriber COMMAND test_single_publisher_single_subscriber)
+
+add_executable(test_single_publisher_multiple_subscribers
+        test/freertos/single_pub_multi_sub.c)
+target_link_libraries(test_single_publisher_multiple_subscribers uMsgLib freertos_kernel)
+add_test(NAME test_single_publisher_multiple_subscribers COMMAND test_single_publisher_multiple_subscribers)
+
+add_executable(test_message_types
+        test/freertos/message_types.c)
+target_link_libraries(test_message_types uMsgLib freertos_kernel)
+add_test(NAME test_message_types COMMAND test_message_types)
 
 
