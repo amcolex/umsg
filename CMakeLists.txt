@@ -56,7 +56,7 @@ add_executable(test_prescaler
 target_link_libraries(test_prescaler uMsgLib freertos_kernel)
 add_test(NAME test_prescaler COMMAND test_prescaler)
 
-# test subscribe prescaler
+# test variable queue length
 add_executable(test_length
         tests/freertos/test_length.c)
 target_link_libraries(test_length uMsgLib freertos_kernel)

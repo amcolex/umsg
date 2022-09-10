@@ -32,7 +32,7 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, u
         sub->sub_handle = umsg_port_create(size,length);
         sub->prescaler = prescaler;
         sub->length = length;
-        sub->channel = ch_id;
+        msg->sub_list->channel = ch_id;
         sub->next_sub = NULL;
         return sub->sub_handle;
     }
@@ -49,7 +49,6 @@ void umsg_publish(umsg_msg_metadata_t* msg, void* data, uint8_t ch_id)
         {
             umsg_port_send(sub, data);
         }
-
         sub = sub->next_sub;
     }
 }
