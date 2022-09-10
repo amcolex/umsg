@@ -9,7 +9,7 @@ static void main_task(void* params);
 
 int main( void )
 {
-    // publisher task lower priority than subscriber task to make they receive the first message
+    // single task which will publish messages and then read them back
     xTaskCreate(main_task, "main_task", 1000, NULL, 1, NULL);
     vTaskStartScheduler();
 
@@ -18,8 +18,8 @@ int main( void )
 
 static void main_task(void* params)
 {
-    umsg_sub_handle_t sub_1 = umsg_test_uints_subscribe(1,1); // queue size of 1
-    umsg_sub_handle_t sub_5 = umsg_test_uints_subscribe(1,QUEUE_LENGTH); // queue size of 5
+    umsg_sub_handle_t sub_1 = umsg_test_uints_subscribe(1,1); // queue size of 1 (always latest message)
+    umsg_sub_handle_t sub_5 = umsg_test_uints_subscribe(1,QUEUE_LENGTH); // queue size of 5 (keeps 5 earliest messages)
     umsg_test_uints_t msg_tx;
     umsg_test_uints_t msg_rx;
     while(1) {

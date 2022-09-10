@@ -9,11 +9,11 @@ static umsg_msg_metadata_t msg_battery_state = {.name = "battery_state"};
 // battery_state
 umsg_sub_handle_t umsg_battery_state_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_battery_state, prescaler, sizeof(umsg_battery_state_t), length);
+    return umsg_subscribe(&msg_battery_state, prescaler, sizeof(umsg_battery_state_t), length, 0);
 }
 void umsg_battery_state_publish(umsg_battery_state_t* data)
 {
-    umsg_publish(&msg_battery_state, data);
+    umsg_publish(&msg_battery_state, data, 0);
 }
 uint8_t umsg_battery_state_receive(umsg_sub_handle_t queue, umsg_battery_state_t* data, uint32_t timeout)
 {

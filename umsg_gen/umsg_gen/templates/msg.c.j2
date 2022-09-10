@@ -14,11 +14,11 @@ static umsg_msg_metadata_t msg_{{prefix}} = {.name = "{{prefix}}"};
 // {{prefix}}
 umsg_sub_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length);
+    return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length, 0);
 }
 void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data)
 {
-    umsg_publish(&msg_{{prefix}}, data);
+    umsg_publish(&msg_{{prefix}}, data, 0);
 }
 uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
 {

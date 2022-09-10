@@ -15,11 +15,11 @@ static umsg_msg_metadata_t msg_test_bitfield = {.name = "test_bitfield"};
 // test_floats
 umsg_sub_handle_t umsg_test_floats_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_floats, prescaler, sizeof(umsg_test_floats_t), length);
+    return umsg_subscribe(&msg_test_floats, prescaler, sizeof(umsg_test_floats_t), length, 0);
 }
 void umsg_test_floats_publish(umsg_test_floats_t* data)
 {
-    umsg_publish(&msg_test_floats, data);
+    umsg_publish(&msg_test_floats, data, 0);
 }
 uint8_t umsg_test_floats_receive(umsg_sub_handle_t queue, umsg_test_floats_t* data, uint32_t timeout)
 {
@@ -33,11 +33,11 @@ uint8_t umsg_test_floats_peek(umsg_test_floats_t* data)
 // test_uints
 umsg_sub_handle_t umsg_test_uints_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_uints, prescaler, sizeof(umsg_test_uints_t), length);
+    return umsg_subscribe(&msg_test_uints, prescaler, sizeof(umsg_test_uints_t), length, 0);
 }
 void umsg_test_uints_publish(umsg_test_uints_t* data)
 {
-    umsg_publish(&msg_test_uints, data);
+    umsg_publish(&msg_test_uints, data, 0);
 }
 uint8_t umsg_test_uints_receive(umsg_sub_handle_t queue, umsg_test_uints_t* data, uint32_t timeout)
 {
@@ -51,11 +51,11 @@ uint8_t umsg_test_uints_peek(umsg_test_uints_t* data)
 // test_ints
 umsg_sub_handle_t umsg_test_ints_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_ints, prescaler, sizeof(umsg_test_ints_t), length);
+    return umsg_subscribe(&msg_test_ints, prescaler, sizeof(umsg_test_ints_t), length, 0);
 }
 void umsg_test_ints_publish(umsg_test_ints_t* data)
 {
-    umsg_publish(&msg_test_ints, data);
+    umsg_publish(&msg_test_ints, data, 0);
 }
 uint8_t umsg_test_ints_receive(umsg_sub_handle_t queue, umsg_test_ints_t* data, uint32_t timeout)
 {
@@ -69,11 +69,11 @@ uint8_t umsg_test_ints_peek(umsg_test_ints_t* data)
 // test_strings
 umsg_sub_handle_t umsg_test_strings_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_strings, prescaler, sizeof(umsg_test_strings_t), length);
+    return umsg_subscribe(&msg_test_strings, prescaler, sizeof(umsg_test_strings_t), length, 0);
 }
 void umsg_test_strings_publish(umsg_test_strings_t* data)
 {
-    umsg_publish(&msg_test_strings, data);
+    umsg_publish(&msg_test_strings, data, 0);
 }
 uint8_t umsg_test_strings_receive(umsg_sub_handle_t queue, umsg_test_strings_t* data, uint32_t timeout)
 {
@@ -87,11 +87,11 @@ uint8_t umsg_test_strings_peek(umsg_test_strings_t* data)
 // test_bools
 umsg_sub_handle_t umsg_test_bools_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_bools, prescaler, sizeof(umsg_test_bools_t), length);
+    return umsg_subscribe(&msg_test_bools, prescaler, sizeof(umsg_test_bools_t), length, 0);
 }
 void umsg_test_bools_publish(umsg_test_bools_t* data)
 {
-    umsg_publish(&msg_test_bools, data);
+    umsg_publish(&msg_test_bools, data, 0);
 }
 uint8_t umsg_test_bools_receive(umsg_sub_handle_t queue, umsg_test_bools_t* data, uint32_t timeout)
 {
@@ -105,11 +105,11 @@ uint8_t umsg_test_bools_peek(umsg_test_bools_t* data)
 // test_enums
 umsg_sub_handle_t umsg_test_enums_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_enums, prescaler, sizeof(umsg_test_enums_t), length);
+    return umsg_subscribe(&msg_test_enums, prescaler, sizeof(umsg_test_enums_t), length, 0);
 }
 void umsg_test_enums_publish(umsg_test_enums_t* data)
 {
-    umsg_publish(&msg_test_enums, data);
+    umsg_publish(&msg_test_enums, data, 0);
 }
 uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data, uint32_t timeout)
 {
@@ -123,11 +123,11 @@ uint8_t umsg_test_enums_peek(umsg_test_enums_t* data)
 // test_bitfield
 umsg_sub_handle_t umsg_test_bitfield_subscribe(uint32_t prescaler, uint8_t length)
 {
-    return umsg_subscribe(&msg_test_bitfield, prescaler, sizeof(umsg_test_bitfield_t), length);
+    return umsg_subscribe(&msg_test_bitfield, prescaler, sizeof(umsg_test_bitfield_t), length, 0);
 }
 void umsg_test_bitfield_publish(umsg_test_bitfield_t* data)
 {
-    umsg_publish(&msg_test_bitfield, data);
+    umsg_publish(&msg_test_bitfield, data, 0);
 }
 uint8_t umsg_test_bitfield_receive(umsg_sub_handle_t queue, umsg_test_bitfield_t* data, uint32_t timeout)
 {
