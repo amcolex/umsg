@@ -3,6 +3,14 @@
 #include <umsg_types.h>
 
 // msg structure typedefs
+
+typedef enum
+{
+    ENUM_A,
+    ENUM_B,
+    ENUM_C
+} enum_test_t;
+
 typedef struct
 {
     float single;
@@ -47,6 +55,12 @@ typedef struct
     bool b[3];
 } umsg_test_bools_t;
 
+typedef struct
+{
+    enum_test_t single_enum;
+    enum_test_t enum_array[3];
+} umsg_test_enums_t;
+
 // api function headers
 umsg_sub_handle_t umsg_test_floats_subscribe(uint32_t prescaler, uint8_t length);
 void umsg_test_floats_publish(umsg_test_floats_t* data);
@@ -72,4 +86,9 @@ umsg_sub_handle_t umsg_test_bools_subscribe(uint32_t prescaler, uint8_t length);
 void umsg_test_bools_publish(umsg_test_bools_t* data);
 uint8_t umsg_test_bools_receive(umsg_sub_handle_t queue, umsg_test_bools_t* data, uint32_t timeout);
 uint8_t umsg_test_bools_peek(umsg_test_bools_t* data);
+
+umsg_sub_handle_t umsg_test_enums_subscribe(uint32_t prescaler, uint8_t length);
+void umsg_test_enums_publish(umsg_test_enums_t* data);
+uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data, uint32_t timeout);
+uint8_t umsg_test_enums_peek(umsg_test_enums_t* data);
 

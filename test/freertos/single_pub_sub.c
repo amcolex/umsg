@@ -8,7 +8,6 @@ static void sub_task(void* params);
 
 int main( void )
 {
-
     xTaskCreate(pub_task, "pub_task", 1000, NULL, 1, NULL);
     xTaskCreate(sub_task, "sub_task", 1000, NULL, 1, NULL);
     vTaskStartScheduler();
@@ -36,9 +35,3 @@ static void pub_task(void* params)
         vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
-
-void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
-{
-    while(1);
-}
-

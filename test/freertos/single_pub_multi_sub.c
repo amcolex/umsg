@@ -53,8 +53,3 @@ static void pub_task(void* params)
     }
 }
 
-void vAssertCalled( unsigned long ulLine, const char * const pcFileName )
-{
-    while(1);
-}
-

@@ -1,4 +1,15 @@
 {
+  "enums": [
+    {
+      "name": "enum_test",
+      "enumerators": [
+        "enum_a",
+        "enum_b",
+        "enum_c"
+      ]
+    }
+  ],
+
   "msgs": [
     {
       "name": "floats",
@@ -132,6 +143,20 @@
           "length": 3
         }
       ]
+    },
+    {
+      "name": "enums",
+        "fields": [
+            {
+            "name": "single_enum",
+            "type": "enum_test"
+            },
+            {
+            "name": "enum_array",
+            "type": "enum_test",
+            "length": 3
+            }
+        ]
     }
   ]
 }

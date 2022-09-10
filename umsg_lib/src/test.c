@@ -8,6 +8,7 @@ static umsg_msg_metadata_t msg_test_uints = {.name = "test_uints"};
 static umsg_msg_metadata_t msg_test_ints = {.name = "test_ints"};
 static umsg_msg_metadata_t msg_test_strings = {.name = "test_strings"};
 static umsg_msg_metadata_t msg_test_bools = {.name = "test_bools"};
+static umsg_msg_metadata_t msg_test_enums = {.name = "test_enums"};
 
 // msg api's
 // test_floats
@@ -98,5 +99,23 @@ uint8_t umsg_test_bools_receive(umsg_sub_handle_t queue, umsg_test_bools_t* data
 uint8_t umsg_test_bools_peek(umsg_test_bools_t* data)
 {
     return umsg_peek(&msg_test_bools, data, sizeof(umsg_test_bools_t));
+}
+
+// test_enums
+umsg_sub_handle_t umsg_test_enums_subscribe(uint32_t prescaler, uint8_t length)
+{
+    return umsg_subscribe(&msg_test_enums, prescaler, sizeof(umsg_test_enums_t), length);
+}
+void umsg_test_enums_publish(umsg_test_enums_t* data)
+{
+    umsg_publish(&msg_test_enums, data);
+}
+uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data, uint32_t timeout)
+{
+    return umsg_receive(queue, data, timeout);
+}
+uint8_t umsg_test_enums_peek(umsg_test_enums_t* data)
+{
+    return umsg_peek(&msg_test_enums, data, sizeof(umsg_test_enums_t));
 }
 
