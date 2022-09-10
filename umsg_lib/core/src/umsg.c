@@ -6,7 +6,7 @@
 #include <umsg_port.h>
 #include <string.h>
 
-umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, uint32_t size, uint8_t length, uint8_t channel)
+umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, uint32_t size, uint8_t length, uint8_t ch_id)
 {
     if(msg->sub_list == NULL)
     {
@@ -16,7 +16,7 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, u
         msg->sub_list->sub_handle = umsg_port_create(size,length);
         msg->sub_list->prescaler = prescaler;
         msg->sub_list->length = length;
-        msg->sub_list->channel = channel;
+        msg->sub_list->channel = ch_id;
         msg->sub_list->next_sub = NULL;
         return msg->sub_list->sub_handle;
     }
@@ -32,26 +32,24 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, u
         sub->sub_handle = umsg_port_create(size,length);
         sub->prescaler = prescaler;
         sub->length = length;
-        sub->channel = channel;
+        sub->channel = ch_id;
         sub->next_sub = NULL;
         return sub->sub_handle;
     }
 }
 
-void umsg_publish(umsg_msg_metadata_t* msg, void* data, uint8_t channel)
+void umsg_publish(umsg_msg_metadata_t* msg, void* data, uint8_t ch_id)
 {
     msg->msg_value = data;
     msg->counter++;
     umsg_sub_t* sub = msg->sub_list;
     while(sub != NULL)
     {
-        if(msg->counter % sub->prescaler == 0 && sub->channel == channel)
+        if(msg->counter % sub->prescaler == 0 && sub->channel == ch_id)
         {
             umsg_port_send(sub, data);
         }
-        {
-            umsg_port_send(sub, data);
-        }
+
         sub = sub->next_sub;
     }
 }
