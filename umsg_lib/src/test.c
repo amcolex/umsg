@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-10
+// Generated with umsg_gen on 2022-09-11
 #include <umsg.h>
 #include <umsg_test.h>
 
@@ -9,6 +9,7 @@ static umsg_msg_metadata_t msg_test_ints = {.name = "test_ints"};
 static umsg_msg_metadata_t msg_test_strings = {.name = "test_strings"};
 static umsg_msg_metadata_t msg_test_bools = {.name = "test_bools"};
 static umsg_msg_metadata_t msg_test_enums = {.name = "test_enums"};
+static umsg_msg_metadata_t msg_test_bitfield = {.name = "test_bitfield"};
 
 // msg api's
 // test_floats
@@ -117,5 +118,23 @@ uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data
 uint8_t umsg_test_enums_peek(umsg_test_enums_t* data)
 {
     return umsg_peek(&msg_test_enums, data, sizeof(umsg_test_enums_t));
+}
+
+// test_bitfield
+umsg_sub_handle_t umsg_test_bitfield_subscribe(uint32_t prescaler, uint8_t length)
+{
+    return umsg_subscribe(&msg_test_bitfield, prescaler, sizeof(umsg_test_bitfield_t), length);
+}
+void umsg_test_bitfield_publish(umsg_test_bitfield_t* data)
+{
+    umsg_publish(&msg_test_bitfield, data);
+}
+uint8_t umsg_test_bitfield_receive(umsg_sub_handle_t queue, umsg_test_bitfield_t* data, uint32_t timeout)
+{
+    return umsg_receive(queue, data, timeout);
+}
+uint8_t umsg_test_bitfield_peek(umsg_test_bitfield_t* data)
+{
+    return umsg_peek(&msg_test_bitfield, data, sizeof(umsg_test_bitfield_t));
 }
 

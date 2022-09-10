@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-10
+// Generated with umsg_gen on 2022-09-11
 #pragma once
 #include <umsg_types.h>
 
@@ -61,6 +61,11 @@ typedef struct
     enum_test_t enum_array[3];
 } umsg_test_enums_t;
 
+typedef struct
+{
+    uint8_t a : 1, b : 2, c : 4;
+} umsg_test_bitfield_t;
+
 // api function headers
 umsg_sub_handle_t umsg_test_floats_subscribe(uint32_t prescaler, uint8_t length);
 void umsg_test_floats_publish(umsg_test_floats_t* data);
@@ -91,4 +96,9 @@ umsg_sub_handle_t umsg_test_enums_subscribe(uint32_t prescaler, uint8_t length);
 void umsg_test_enums_publish(umsg_test_enums_t* data);
 uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data, uint32_t timeout);
 uint8_t umsg_test_enums_peek(umsg_test_enums_t* data);
+
+umsg_sub_handle_t umsg_test_bitfield_subscribe(uint32_t prescaler, uint8_t length);
+void umsg_test_bitfield_publish(umsg_test_bitfield_t* data);
+uint8_t umsg_test_bitfield_receive(umsg_sub_handle_t queue, umsg_test_bitfield_t* data, uint32_t timeout);
+uint8_t umsg_test_bitfield_peek(umsg_test_bitfield_t* data);
 

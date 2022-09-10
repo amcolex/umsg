@@ -28,31 +28,37 @@ target_link_libraries(uMsgLib freertos_kernel)
 # create and link test executables
 # test single producer single consumer
 add_executable(test_single_publisher_single_subscriber
-        test/freertos/test_single_pub_sub.c)
+        tests/freertos/test_single_pub_sub.c)
 target_link_libraries(test_single_publisher_single_subscriber uMsgLib freertos_kernel)
 add_test(NAME test_single_publisher_single_subscriber COMMAND test_single_publisher_single_subscriber)
 
 # test single producer multiple consumer
 add_executable(test_single_publisher_multiple_subscribers
-        test/freertos/test_single_pub_multi_sub.c)
+        tests/freertos/test_single_pub_multi_sub.c)
 target_link_libraries(test_single_publisher_multiple_subscribers uMsgLib freertos_kernel)
 add_test(NAME test_single_publisher_multiple_subscribers COMMAND test_single_publisher_multiple_subscribers)
 
 # test all message type primitives
 add_executable(test_message_types
-        test/freertos/test_types.c)
+        tests/freertos/test_types.c)
 target_link_libraries(test_message_types uMsgLib freertos_kernel)
 add_test(NAME test_message_types COMMAND test_message_types)
 
 # test message peeking
 add_executable(test_peek
-        test/freertos/test_peek.c)
+        tests/freertos/test_peek.c)
 target_link_libraries(test_peek uMsgLib freertos_kernel)
 add_test(NAME test_peek COMMAND test_peek)
 
 # test subscribe prescaler
 add_executable(test_prescaler
-        test/freertos/test_prescaler.c)
+        tests/freertos/test_prescaler.c)
 target_link_libraries(test_prescaler uMsgLib freertos_kernel)
 add_test(NAME test_prescaler COMMAND test_prescaler)
+
+# test subscribe prescaler
+add_executable(test_length
+        tests/freertos/test_length.c)
+target_link_libraries(test_length uMsgLib freertos_kernel)
+add_test(NAME test_length COMMAND test_length)
 

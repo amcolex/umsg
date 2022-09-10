@@ -9,7 +9,6 @@
       ]
     }
   ],
-
   "msgs": [
     {
       "name": "floats",
@@ -75,7 +74,7 @@
         }
       ]
     },
-{
+    {
       "name": "ints",
       "fields": [
         {
@@ -146,17 +145,39 @@
     },
     {
       "name": "enums",
-        "fields": [
+      "fields": [
+        {
+          "name": "single_enum",
+          "type": "enum_test"
+        },
+        {
+          "name": "enum_array",
+          "type": "enum_test",
+          "length": 3
+        }
+      ]
+    },
+    {
+      "name": "bitfield",
+      "fields": [
+        {
+          "type": "uint8",
+          "bitfield": [
             {
-            "name": "single_enum",
-            "type": "enum_test"
+              "name": "a",
+              "bits": 1
             },
             {
-            "name": "enum_array",
-            "type": "enum_test",
-            "length": 3
+              "name": "b",
+              "bits": 2
+            },
+            {
+              "name": "c",
+              "bits": 4
             }
-        ]
+          ]
+        }
+      ]
     }
   ]
 }

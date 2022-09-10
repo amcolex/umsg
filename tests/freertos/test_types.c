@@ -45,6 +45,11 @@ static umsg_test_enums_t msg_enums_ref = {
         .enum_array = {ENUM_A, ENUM_B, ENUM_C}
 };
 
+static umsg_test_bitfield_t msg_bitfield_ref = {
+        .a = 1,
+        .b = 2,
+        .c = 3,
+};
 
 static void pub_task(void* params);
 static void sub_task(void* params);
