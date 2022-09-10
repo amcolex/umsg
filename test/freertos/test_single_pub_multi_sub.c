@@ -7,6 +7,7 @@ static void pub_task(void* params);
 static void sub_task(void* params);
 
 static uint8_t received_flags[3];
+
 int main( void )
 {
     xTaskCreate(pub_task, "pub_task", 1000, NULL, 1, NULL);
