@@ -5,7 +5,7 @@ project(uMsgTest)
 include(CTest)
 
 # generate umsg_lib directory
-execute_process(COMMAND python .\\umsg_gen\\umsg_gen\\umsg_gen.py -d ./messages -o ./umsg_lib
+execute_process(COMMAND python .\\umsg_gen\\umsg_gen\\umsg_gen.py -d ./msg_defs -o ./umsg_lib
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Choose umsg port
@@ -26,19 +26,33 @@ add_subdirectory(FreeRTOS-Kernel)
 target_link_libraries(uMsgLib freertos_kernel)
 
 # create and link test executables
+# test single producer single consumer
 add_executable(test_single_publisher_single_subscriber
-        test/freertos/single_pub_sub.c)
+        test/freertos/test_single_pub_sub.c)
 target_link_libraries(test_single_publisher_single_subscriber uMsgLib freertos_kernel)
 add_test(NAME test_single_publisher_single_subscriber COMMAND test_single_publisher_single_subscriber)
 
+# test single producer multiple consumer
 add_executable(test_single_publisher_multiple_subscribers
-        test/freertos/single_pub_multi_sub.c)
+        test/freertos/test_single_pub_multi_sub.c)
 target_link_libraries(test_single_publisher_multiple_subscribers uMsgLib freertos_kernel)
 add_test(NAME test_single_publisher_multiple_subscribers COMMAND test_single_publisher_multiple_subscribers)
 
+# test all message type primitives
 add_executable(test_message_types
-        test/freertos/message_types.c)
+        test/freertos/test_types.c)
 target_link_libraries(test_message_types uMsgLib freertos_kernel)
 add_test(NAME test_message_types COMMAND test_message_types)
 
+# test message peeking
+add_executable(test_peek
+        test/freertos/test_peek.c)
+target_link_libraries(test_peek uMsgLib freertos_kernel)
+add_test(NAME test_peek COMMAND test_peek)
+
+# test subscribe prescaler
+add_executable(test_prescaler
+        test/freertos/test_prescaler.c)
+target_link_libraries(test_prescaler uMsgLib freertos_kernel)
+add_test(NAME test_prescaler COMMAND test_prescaler)
 
