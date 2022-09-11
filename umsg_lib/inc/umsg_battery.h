@@ -19,7 +19,9 @@ typedef struct
 
 // api function headers
 umsg_sub_handle_t umsg_battery_state_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_battery_state_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_battery_state_publish(umsg_battery_state_t* data);
+void umsg_battery_state_publish_ch(umsg_battery_state_t* data, uint8_t channel);
 uint8_t umsg_battery_state_receive(umsg_sub_handle_t queue, umsg_battery_state_t* data, uint32_t timeout);
 uint8_t umsg_battery_state_peek(umsg_battery_state_t* data);
 

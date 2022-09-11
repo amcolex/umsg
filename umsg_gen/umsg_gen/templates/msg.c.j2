@@ -16,9 +16,17 @@ umsg_sub_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length)
 {
     return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length, 0);
 }
+umsg_sub_handle_t umsg_{{prefix}}_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel)
+{
+    return umsg_subscribe(&msg_{{prefix}}, prescaler, sizeof(umsg_{{prefix}}_t), length, channel);
+}
 void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data)
 {
     umsg_publish(&msg_{{prefix}}, data, 0);
+}
+void umsg_{{prefix}}_publish_ch(umsg_{{prefix}}_t* data, uint8_t channel)
+{
+    umsg_publish(&msg_{{prefix}}, data, channel);
 }
 uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout)
 {

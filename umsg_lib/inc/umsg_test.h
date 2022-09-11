@@ -68,37 +68,51 @@ typedef struct
 
 // api function headers
 umsg_sub_handle_t umsg_test_floats_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_floats_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_floats_publish(umsg_test_floats_t* data);
+void umsg_test_floats_publish_ch(umsg_test_floats_t* data, uint8_t channel);
 uint8_t umsg_test_floats_receive(umsg_sub_handle_t queue, umsg_test_floats_t* data, uint32_t timeout);
 uint8_t umsg_test_floats_peek(umsg_test_floats_t* data);
 
 umsg_sub_handle_t umsg_test_uints_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_uints_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_uints_publish(umsg_test_uints_t* data);
+void umsg_test_uints_publish_ch(umsg_test_uints_t* data, uint8_t channel);
 uint8_t umsg_test_uints_receive(umsg_sub_handle_t queue, umsg_test_uints_t* data, uint32_t timeout);
 uint8_t umsg_test_uints_peek(umsg_test_uints_t* data);
 
 umsg_sub_handle_t umsg_test_ints_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_ints_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_ints_publish(umsg_test_ints_t* data);
+void umsg_test_ints_publish_ch(umsg_test_ints_t* data, uint8_t channel);
 uint8_t umsg_test_ints_receive(umsg_sub_handle_t queue, umsg_test_ints_t* data, uint32_t timeout);
 uint8_t umsg_test_ints_peek(umsg_test_ints_t* data);
 
 umsg_sub_handle_t umsg_test_strings_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_strings_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_strings_publish(umsg_test_strings_t* data);
+void umsg_test_strings_publish_ch(umsg_test_strings_t* data, uint8_t channel);
 uint8_t umsg_test_strings_receive(umsg_sub_handle_t queue, umsg_test_strings_t* data, uint32_t timeout);
 uint8_t umsg_test_strings_peek(umsg_test_strings_t* data);
 
 umsg_sub_handle_t umsg_test_bools_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_bools_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_bools_publish(umsg_test_bools_t* data);
+void umsg_test_bools_publish_ch(umsg_test_bools_t* data, uint8_t channel);
 uint8_t umsg_test_bools_receive(umsg_sub_handle_t queue, umsg_test_bools_t* data, uint32_t timeout);
 uint8_t umsg_test_bools_peek(umsg_test_bools_t* data);
 
 umsg_sub_handle_t umsg_test_enums_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_enums_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_enums_publish(umsg_test_enums_t* data);
+void umsg_test_enums_publish_ch(umsg_test_enums_t* data, uint8_t channel);
 uint8_t umsg_test_enums_receive(umsg_sub_handle_t queue, umsg_test_enums_t* data, uint32_t timeout);
 uint8_t umsg_test_enums_peek(umsg_test_enums_t* data);
 
 umsg_sub_handle_t umsg_test_bitfield_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_test_bitfield_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_test_bitfield_publish(umsg_test_bitfield_t* data);
+void umsg_test_bitfield_publish_ch(umsg_test_bitfield_t* data, uint8_t channel);
 uint8_t umsg_test_bitfield_receive(umsg_sub_handle_t queue, umsg_test_bitfield_t* data, uint32_t timeout);
 uint8_t umsg_test_bitfield_peek(umsg_test_bitfield_t* data);
 

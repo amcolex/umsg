@@ -59,7 +59,9 @@ typedef struct
 {% for msg_dict in topic_dict.msgs %}
 {% set prefix = topic_dict.name+'_'+msg_dict.name %}
 umsg_sub_handle_t umsg_{{prefix}}_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_{{prefix}}_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data);
+void umsg_{{prefix}}_publish_ch(umsg_{{prefix}}_t* data, uint8_t channel);
 uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout);
 uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data);
 

@@ -11,9 +11,17 @@ umsg_sub_handle_t umsg_control_setpoints_subscribe(uint32_t prescaler, uint8_t l
 {
     return umsg_subscribe(&msg_control_setpoints, prescaler, sizeof(umsg_control_setpoints_t), length, 0);
 }
+umsg_sub_handle_t umsg_control_setpoints_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel)
+{
+    return umsg_subscribe(&msg_control_setpoints, prescaler, sizeof(umsg_control_setpoints_t), length, channel);
+}
 void umsg_control_setpoints_publish(umsg_control_setpoints_t* data)
 {
     umsg_publish(&msg_control_setpoints, data, 0);
+}
+void umsg_control_setpoints_publish_ch(umsg_control_setpoints_t* data, uint8_t channel)
+{
+    umsg_publish(&msg_control_setpoints, data, channel);
 }
 uint8_t umsg_control_setpoints_receive(umsg_sub_handle_t queue, umsg_control_setpoints_t* data, uint32_t timeout)
 {
