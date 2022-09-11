@@ -6,6 +6,7 @@ add_library(uMsgLib STATIC
     src/control.c
     src/sensors.c
     src/test.c
+    src/unused.c
 )
 # select port
 if(NOT DEFINED UMSG_PORT)
@@ -24,3 +25,6 @@ endif()
 
 # add includes
 target_include_directories(uMsgLib PUBLIC inc core/inc)
+target_link_options(uMsgLib PRIVATE -ffunction-sections -fdata-sections)
+# linker options to allow dead code elimination
+target_link_options(uMsgLib PRIVATE -Wl,--gc-sections)

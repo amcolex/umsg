@@ -67,3 +67,14 @@ add_executable(test_multi_channel
 target_link_libraries(test_multi_channel uMsgLib freertos_kernel)
 add_test(NAME test_multi_channel COMMAND test_multi_channel)
 
+# test code size with unused messages with linker option (look at generated .map files to compare) (doesn't work on Mingw)
+add_executable(test_unused_messages_no_code_removal
+        tests/freertos/test_unused_messages.c)
+target_link_libraries(test_unused_messages_no_code_removal uMsgLib freertos_kernel)
+target_link_options(test_unused_messages_no_code_removal PRIVATE  -Xlinker -Map=no_code_removal.map )
+
+add_executable(test_unused_messages_with_code_removal
+        tests/freertos/test_unused_messages.c)
+target_link_libraries(test_unused_messages_with_code_removal uMsgLib freertos_kernel)
+target_link_options(test_unused_messages_with_code_removal PRIVATE -Wl,--gc-sections -Xlinker -Map=with_code_removal.map )
+

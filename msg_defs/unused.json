@@ -1,0 +1,31 @@
+{
+  "msgs": [
+    {
+      "name": "used_var",
+      "fields": [
+        {
+          "name": "a",
+          "type": "uint8"
+        },
+        {
+          "name": "b",
+          "type": "uint8"
+        },
+        {
+          "name": "c",
+          "type": "uint8"
+        }
+      ]
+    },
+    {
+      "name": "unused_var",
+      "fields": [
+        {
+          "name": "a",
+          "type": "uint64",
+          "length": 512
+        }
+      ]
+    }
+  ]
+}
