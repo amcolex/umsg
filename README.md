@@ -7,6 +7,22 @@ A Lightweight pub-sub library written in C for embedded systems.
 
 ## uMsg Publish and Subscribe Overview
 
+### Generated API
+
+example for sensors.json topic, 'imu' message:
+
+```c
+umsg_sub_handle_t umsg_sensors_imu_subscribe(uint32_t prescaler, uint8_t length);
+umsg_sub_handle_t umsg_sensors_imu_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+void umsg_sensors_imu_publish(umsg_sensors_imu_t* data);
+void umsg_sensors_imu_publish_ch(umsg_sensors_imu_t* data, uint8_t channel);
+uint8_t umsg_sensors_imu_receive(umsg_sub_handle_t queue, umsg_sensors_imu_t* data, uint32_t timeout);
+uint8_t umsg_sensors_imu_peek(umsg_sensors_imu_t* data);
+```
+
+There are two subscribe and publish functions. One is default is used when there is only 1 channel, with a single publisher. The other is used when there are multiple publishers, and each publisher is on a different channel.
+
+Channels are used when there are multiple publisher for the same message type. For example, if there are two IMU sensors, they can publish to different channels.
 ### How to define a topic and messages
 
 A topic is a dedicated .json file that contains a list of messages and enums (optional).
