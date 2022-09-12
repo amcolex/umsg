@@ -22,7 +22,7 @@ The easiest is to install umsg generator python library with:
 pip install umsg-gen
 ```
 
-Prepare your topic .json file (see [topic definition]#How-to-define-a-topic) with your messages. And save them in a separate directory such as '\messages' 
+Prepare your topic .json file (see [topic definition]#Defining-messages) with your messages. And save them in a separate directory such as '\messages' 
 
 Run:
 
@@ -219,9 +219,9 @@ typedef struct
 - char
 - bool
 
-Field members can be any of the above primitives, as a scalar, array, or bitfield.
+Field members can be any of the above primitives - as a scalar, array, or bitfield.
 
-They can also be an enum if it's declared in the enum section of the file.
+They can also be an enum as long as it's declared in the enum section of the file.
 
 The generated code follows this naming template:
 
@@ -230,3 +230,5 @@ typedef struct {
    ...
 } umsg_FILENAME_MESSAGENAME_t 
 ```
+
+All of the topic.json files should be grouped in a single directory, which are then passed to the umsg-gen generator.
