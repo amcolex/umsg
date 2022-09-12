@@ -7,10 +7,10 @@ A Lightweight pub-sub library written in C for embedded systems.
 
 - Generated library from json definitions
 - Statically typed -> Compile time checking
-- Multi-publisher with seperate channels
+- Multi-publisher with separate channels
 - Uses the RTOS queue API for performance
 - Dead simple and efficient. (Core code less than 150 LoC!)
-- Scalable. Builds a linked-list for infinite number of publisher and subscribers.
+- Scalable. Builds a linked-list for an infinite number of publishers and subscribers.
 - Easily ported to other RTOS/OS (only needs to change core file)
 
 # Quickstart
@@ -22,7 +22,7 @@ The easiest is to install umsg generator python library with:
 pip install umsg-gen
 ```
 
-Prepare your topic .json file (see [topic definition]#How-to-define-a-topic) with your messages. And save them in a seperate directory such as '\messages' 
+Prepare your topic .json file (see [topic definition]#How-to-define-a-topic) with your messages. And save them in a separate directory such as '\messages' 
 
 Run:
 
@@ -32,7 +32,7 @@ umsg-gen -d '\messages' - o '\umsg_lib'
 
 ## Add to CMake Project
 
-The generated libray contains a CMakeLists.txt. Select the port and add the library to your CMake project with:
+The generated library contains a CMakeLists.txt. Select the port and add the library to your CMake project with:
 
 ```cmake
 set(UMSG_PORT "FREERTOS")
@@ -57,7 +57,7 @@ In project settings:
 - Add 'umsg_lib/src' and 'umsg_lib/core/src' to source paths.
 - Add 'umsg_lib/inc' and 'umsg_lib/core/inc' to include paths.
 
-Keep only one of the port_xxxx.c (i.e. port_freertos.c) in the 'umsg_lib/core/src', by excluding or deleting the others.
+Keep only **one** of the port_xxxx.c (i.e. port_freertos.c) in the 'umsg_lib/core/src', by excluding or deleting the others.
 
 
 # uMsg Publish and Subscribe Overview
@@ -72,40 +72,52 @@ For example. given a sensors.json which contains an 'imu' message, the following
 umsg_sub_handle_t umsg_sensors_imu_subscribe(uint32_t prescaler, uint8_t length);
 ```
 
+- Called from Subscriber task and returns a subscription handle. 
 
-umsg_sub_handle_t umsg_sensors_imu_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+- Prescaler sets output rate division. 
+
+- Length defines the queue length. If length == 1, the queue will always contain the latest value ('Queue Overwrite' on the publisher side)
+
+- if Length > 1, then the queue will hold the first N values ('Queue send to back' on the publisher side)
+
+```c
 void umsg_sensors_imu_publish(umsg_sensors_imu_t* data);
-void umsg_sensors_imu_publish_ch(umsg_sensors_imu_t* data, uint8_t channel);
-uint8_t umsg_sensors_imu_receive(umsg_sub_handle_t queue, umsg_sensors_imu_t* data, uint32_t timeout);
-uint8_t umsg_sensors_imu_peek(umsg_sensors_imu_t* data);
 ```
 
-There are two subscribe and publish functions. One is default is used when there is only 1 channel, with a single publisher. The other is used when there are multiple publishers, and each publisher is on a different channel.
+Publish data. Data will be sent to the message queue of all subscribers (adapted by the prescaler)
 
-Channels are used when there are multiple publisher for the same message type. For example, if there are two IMU sensors, they can publish to different channels.
-## Defining messages
+```c
+uint8_t umsg_sensors_imu_receive(umsg_sub_handle_t queue, umsg_sensors_imu_t* data, uint32_t timeout);
+```
+
+Receive function used by subscribers. Timeout is given in [ms]. For infinite timeout use the RTOS defines, such as portMAX_DELAY
+
+```c
+uint8_t umsg_sensors_imu_peek(umsg_sensors_imu_t* data);
+```
+Reads the latest which were published, bypassing the queues. return 0 if no values were ever published.
+### Multi-Channel API functions
+
+Both the subscribe and publish API functions have multi-channel variants, with the '_ch' suffix.
+
+```c
+umsg_sub_handle_t umsg_sensors_imu_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
+
+void umsg_sensors_imu_publish_ch(umsg_sensors_imu_t* data, uint8_t channel);
+```
+
+Often there are multiple publishers for the same message type. For example, two imu drivers can be running and each publishes their respective data.
+
+The channel API allows each driver to send to a different channel number, and for the subscribers to decide which channel to listen to.
+
+It's up to the application code to allocate and keep track of the channel numbers.
+
+# Defining messages
 
 A topic is a dedicated .json file that contains a list of messages and enums (optional).
 
-list of primitives:
-- uint8
-- int8
-- uint16
-- int16
-- uint32
-- int32
-- uint64
-- int64
-- float
-- double
-- char
-- bool
-
-A field is any of these primitives, which can be defined as a scalar, array, or bitfield.
-
-A message is a group of fields, which is generated as a ```typedef struct```
+Example.json:
 ```c
-example.json:
 
 {
    "enums":[                    // array of enum declarations (optional)
@@ -168,7 +180,7 @@ example.json:
 }
 ```
 
-Generated output:
+Generated Typedefs:
 
 ```c
 typedef enum
@@ -191,4 +203,30 @@ typedef struct
     uint8_t married : 1, has_children : 1, has_dog : 1;
 } umsg_example_simple_msg_t;
 
+```
+
+**list of primitives:**
+- uint8
+- int8
+- uint16
+- int16
+- uint32
+- int32
+- uint64
+- int64
+- float
+- double
+- char
+- bool
+
+Field members can be any of the above primitives, as a scalar, array, or bitfield.
+
+They can also be an enum if it's declared in the enum section of the file.
+
+The generated code follows this naming template:
+
+```c
+typedef struct {
+   ...
+} umsg_FILENAME_MESSAGENAME_t 
 ```
