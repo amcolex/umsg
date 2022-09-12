@@ -40,7 +40,7 @@ typedef enum
     {%for val in enum.enumerators%}
     {{val.upper()}}{{ "," if not loop.last else "" }}
     {%endfor%}
-} {{enum.name}}_t;
+} umsg_{{topic_dict.name}}_{{enum.name}}_t;
 
 {%endfor%}
 {% endif %}

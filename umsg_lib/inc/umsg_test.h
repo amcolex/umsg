@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-11
+// Generated with umsg_gen on 2022-09-12
 #pragma once
 #include <umsg_types.h>
 
@@ -9,7 +9,7 @@ typedef enum
     ENUM_A,
     ENUM_B,
     ENUM_C
-} enum_test_t;
+} umsg_test_enum_test_t;
 
 typedef struct
 {

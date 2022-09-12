@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-11
+// Generated with umsg_gen on 2022-09-12
 #pragma once
 #include <umsg_types.h>
 
@@ -9,7 +9,7 @@ typedef enum
     BATTERY_OK,
     BATTERY_LOW,
     BATTERY_DEAD
-} battery_state_t;
+} umsg_battery_battery_state_t;
 
 typedef struct
 {

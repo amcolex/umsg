@@ -5,9 +5,55 @@
 
 A Lightweight pub-sub library written in C for embedded systems.
 
-## uMsg Publish and Subscribe Overview
+- Generated library from json definitions
+- Statically typed -> Compile time checking
+- Dead simple and efficient. (Core code less than 150 LoC!)
+- Easily ported to other RTOS/OS (only need to change core file)
 
-### Generated API
+# Quickstart
+
+## Generate Library
+The easiest is to install umsg generator python library with: 
+
+```c
+pip install umsg-gen
+```
+
+Prepare your topic .json file (see [topic definition]#How-to-define-a-topic) with your messages. And save them in a seperate directory such as '\messages' 
+
+Run:
+
+```c
+umsg-gen -d '\messages' - o '\umsg_lib'
+```
+
+## Add to Project
+
+The generated libray contains a CMakeLists.txt. Select the port and add the library to your CMake project with:
+
+```cmake
+set(UMSG_PORT "FREERTOS")
+add_subdirectory(umsg_lib)
+```
+
+A CMake uMsgLib shared library is created. Link your FreeRTOS library to the uMsgLib library
+
+```cmake
+target_link_libraries(uMsgLib freertos_kernel)
+```
+
+Finally, link uMsgLib to your main project target
+
+```cmake
+target_link_libraries(your_project uMsgLib)
+```
+
+
+## Basic functions
+
+# uMsg Publish and Subscribe Overview
+
+## Generated API
 
 example for sensors.json topic, 'imu' message:
 
@@ -23,7 +69,7 @@ uint8_t umsg_sensors_imu_peek(umsg_sensors_imu_t* data);
 There are two subscribe and publish functions. One is default is used when there is only 1 channel, with a single publisher. The other is used when there are multiple publishers, and each publisher is on a different channel.
 
 Channels are used when there are multiple publisher for the same message type. For example, if there are two IMU sensors, they can publish to different channels.
-### How to define a topic and messages
+## Defining messages
 
 A topic is a dedicated .json file that contains a list of messages and enums (optional).
 
@@ -41,8 +87,12 @@ list of primitives:
 - char
 - bool
 
+A field is any of these primitives, which can be defined as a scalar, array, or bitfield.
 
+A message is a group of fields, which is generated as a ```typedef struct```
 ```c
+example.json:
+
 {
    "enums":[                    // array of enum declarations (optional)
       {
@@ -104,9 +154,26 @@ list of primitives:
 }
 ```
 
-## Data types
+Generated output:
 
+```c
+typedef enum
+{
+    GREEN,
+    BLUE,
+    READ
+} colors_t;
 
+typedef struct
+{
+    colors_t chosen_color;
+} umsg_example_color_selection_t;
 
-## How to use
-
+typedef struct
+{
+    char name[10];
+    uint8_t age;
+    float height;
+    uint8_t married : 1, has_children : 1, has_dog : 1;
+} umsg_example_simple_msg_t;
+```
