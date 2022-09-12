@@ -13,7 +13,7 @@ typedef enum
 
 typedef struct
 {
-    colors_t chosen_color;
+    umsg_example_colors_t chosen_color;
 } umsg_example_color_selection_t;
 
 typedef struct

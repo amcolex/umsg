@@ -57,8 +57,8 @@ typedef struct
 
 typedef struct
 {
-    enum_test_t single_enum;
-    enum_test_t enum_array[3];
+    umsg_test_enum_test_t single_enum;
+    umsg_test_enum_test_t enum_array[3];
 } umsg_test_enums_t;
 
 typedef struct

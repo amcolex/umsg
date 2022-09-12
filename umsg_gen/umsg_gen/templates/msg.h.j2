@@ -24,7 +24,7 @@ bool
 {%- elif type.lower()=="char" -%}
 char
 {%- else -%}
-{{type.lower()}}_t
+umsg_{{topic_dict.name}}_{{type.lower()}}_t
 {%- endif%}
 {% endmacro %}
 // Generated with umsg_gen on {{ date }}

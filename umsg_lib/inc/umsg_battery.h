@@ -13,7 +13,7 @@ typedef enum
 
 typedef struct
 {
-    battery_state_t state;
+    umsg_battery_battery_state_t state;
     uint8_t low_battery : 1, critical_battery : 1, high_temperature : 1, low_temperature : 1, charging : 1, discharging : 1, full : 1, not_present : 1;
 } umsg_battery_state_t;
 
