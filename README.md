@@ -3,19 +3,22 @@
 [![Licence](https://img.shields.io/github/license/amcolex/umsg)](https://github.com/amcolex/umsg/blob/master/LICENSE)
 [![Actions Status](https://github.com/amcolex/umsg/workflows/CMake/badge.svg?branch=master)](https://github.com/amcolex/umsg/actions)
 
-A Lightweight pub-sub library written in C for embedded systems.
+A Lightweight pub-sub library written in C for embedded systems. 
 
 - Generated library from json definitions
 - Statically typed -> Compile time checking
+- Multi-publisher with seperate channels
+- Uses the RTOS queue API for performance
 - Dead simple and efficient. (Core code less than 150 LoC!)
-- Easily ported to other RTOS/OS (only need to change core file)
+- Scalable. Builds a linked-list for infinite number of publisher and subscribers.
+- Easily ported to other RTOS/OS (only needs to change core file)
 
 # Quickstart
 
 ## Generate Library
 The easiest is to install umsg generator python library with: 
 
-```c
+```
 pip install umsg-gen
 ```
 
@@ -23,11 +26,11 @@ Prepare your topic .json file (see [topic definition]#How-to-define-a-topic) wit
 
 Run:
 
-```c
+```
 umsg-gen -d '\messages' - o '\umsg_lib'
 ```
 
-## Add to Project
+## Add to CMake Project
 
 The generated libray contains a CMakeLists.txt. Select the port and add the library to your CMake project with:
 
@@ -48,17 +51,28 @@ Finally, link uMsgLib to your main project target
 target_link_libraries(your_project uMsgLib)
 ```
 
+## Add to IDE Project (Eclipse, STM32CubeIDE, etc)
 
-## Basic functions
+In project settings:
+- Add 'umsg_lib/src' and 'umsg_lib/core/src' to source paths.
+- Add 'umsg_lib/inc' and 'umsg_lib/core/inc' to include paths.
+
+Keep only one of the port_xxxx.c (i.e. port_freertos.c) in the 'umsg_lib/core/src', by excluding or deleting the others.
+
 
 # uMsg Publish and Subscribe Overview
 
 ## Generated API
 
-example for sensors.json topic, 'imu' message:
+uMsg generates a seperated .h and .c file for each topic json file.
+
+For example. given a sensors.json which contains an 'imu' message, the following API functions are generated:
 
 ```c
 umsg_sub_handle_t umsg_sensors_imu_subscribe(uint32_t prescaler, uint8_t length);
+```
+
+
 umsg_sub_handle_t umsg_sensors_imu_subscribe_ch(uint32_t prescaler, uint8_t length, uint8_t channel);
 void umsg_sensors_imu_publish(umsg_sensors_imu_t* data);
 void umsg_sensors_imu_publish_ch(umsg_sensors_imu_t* data, uint8_t channel);
@@ -162,11 +176,11 @@ typedef enum
     GREEN,
     BLUE,
     READ
-} colors_t;
+} umsg_example_colors_t;
 
 typedef struct
 {
-    colors_t chosen_color;
+    umsg_example_colors_t chosen_color;
 } umsg_example_color_selection_t;
 
 typedef struct
@@ -176,4 +190,5 @@ typedef struct
     float height;
     uint8_t married : 1, has_children : 1, has_dog : 1;
 } umsg_example_simple_msg_t;
+
 ```
