@@ -27,7 +27,7 @@ Prepare your topic .json file (see [topic definition]#Defining-messages) with yo
 Run:
 
 ```
-umsg-gen -d '\messages' - o '\umsg_lib'
+umsg-gen -d '\messages' -o '\umsg_lib'
 ```
 
 ## Add to CMake Project
