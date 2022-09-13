@@ -36,14 +36,15 @@ void umsg_port_send(umsg_sub_t* sub, void * data)
     {
         if(is_isr_active())
         {
-            xQueueSendToBack(queue, data, 0);
-        }
-        else
-        {
             BaseType_t xHigherPriorityTaskWoken;
             xQueueSendToBackFromISR(queue, data,
                                     &xHigherPriorityTaskWoken);
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+        }
+        else
+        {
+            xQueueSendToBack(queue, data, 0);
         }
     }
     else
@@ -51,14 +52,14 @@ void umsg_port_send(umsg_sub_t* sub, void * data)
         // check if in interrupt context
         if(is_isr_active())
         {
-            xQueueOverwrite(queue, data);
-        }
-        else
-        {
             BaseType_t xHigherPriorityTaskWoken;
             xQueueOverwriteFromISR(queue, data,
                                    &xHigherPriorityTaskWoken);
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+        }
+        else
+        {
+            xQueueOverwrite(queue, data);
         }
     }
 }

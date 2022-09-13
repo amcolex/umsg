@@ -2,6 +2,7 @@
 #include "task.h"
 #include <stdio.h>
 #include <umsg_test.h>
+#include <stdlib.h>
 
 #define QUEUE_LENGTH    5
 

@@ -5,20 +5,28 @@ project(uMsgTest)
 include(CTest)
 
 # generate umsg_lib directory
-execute_process(COMMAND python .\\umsg_gen\\umsg_gen\\umsg_gen.py -d ./msg_defs -o ./umsg_lib
+execute_process(COMMAND python ./umsg_gen/umsg_gen/umsg_gen.py -d ./msg_defs -o ./umsg_lib
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+# configure FreeRTOS
+set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "FreeRTOS Directory")
+set(FREERTOS_HEAP "4" CACHE STRING "Memory heap type")
+
+# if select MinGW or GCC POSIX port based on the host OS
+if(WIN32)
+    set(FREERTOS_PORT "MSVC_MINGW" CACHE STRING "FreeRTOS Port")
+else()
+    set(FREERTOS_PORT "GCC_POSIX" CACHE STRING "FreeRTOS Port")
+    add_compile_options(-m32)
+    add_link_options(-m32)
+endif()
 
 # Choose umsg port
 set(UMSG_PORT "FREERTOS")
 
-# config and add umsg library
+# add umsg and FreeRTOS libs
 add_subdirectory(umsg_lib)
-
-# FreeRTOS Test Executable
-# config and add freertos library
-set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" CACHE STRING "FreeRTOS Directory")
-set(FREERTOS_HEAP "4" CACHE STRING "Memory heap type")
-set(FREERTOS_PORT "MSVC_MINGW" CACHE STRING "FreeRTOS Port")
 add_subdirectory(FreeRTOS-Kernel)
 
 # link umsg with freertos

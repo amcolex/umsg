@@ -2,6 +2,7 @@
 #include "task.h"
 #include <umsg_unused.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static void pub_task(void* params);
 static void sub_task(void* params);

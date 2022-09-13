@@ -2,6 +2,8 @@
 #include "task.h"
 #include <umsg_sensors.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static void pub_task(void* params);
 static void sub_task(void* params);

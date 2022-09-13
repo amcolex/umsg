@@ -2,6 +2,7 @@
 #include "task.h"
 #include <stdio.h>
 #include <umsg_test.h>
+#include <stdlib.h>
 
 static void pub_task(void* params);
 static void sub_task(void* params);

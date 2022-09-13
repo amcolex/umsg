@@ -2,7 +2,8 @@
 #include "task.h"
 #include <stdio.h>
 #include <umsg_test.h>
-
+#include <stdlib.h>
+#include <string.h>
 
 static umsg_test_ints_t msg_ints_ref = {
     .i8 = -1,

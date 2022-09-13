@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-12
+// Generated with umsg_gen on 2022-09-13
 #include <umsg.h>
 #include <umsg_sensors.h>
 
