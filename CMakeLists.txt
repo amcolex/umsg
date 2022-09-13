@@ -19,7 +19,7 @@ if(WIN32)
 else()
     set(FREERTOS_PORT "GCC_POSIX" CACHE STRING "FreeRTOS Port")
     add_compile_options(-m32)
-    add_link_options(-m32)
+    add_link_options(-m32 -pthread)
 endif()
 
 # Choose umsg port
