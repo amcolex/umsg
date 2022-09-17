@@ -4,7 +4,6 @@ import glob
 import re
 import graphviz
 
-
 def create_graph(source_directory, output_directory):
 
     directory_path = Path().resolve() / source_directory
@@ -35,11 +34,11 @@ def create_graph(source_directory, output_directory):
 
         # extract as topic_msg_api
         for instance in instances:
-            keywords = instance.split('_')
+            params = instance.split('_')
             # add key words to files_dict
             if file_name not in files_dict:
                 files_dict[file_name] = []
-            files_dict[file_name].append(keywords)
+            files_dict[file_name].append(params)
 
     # create graph
     graph = graphviz.Digraph(comment='uMsg Graph')
@@ -47,17 +46,31 @@ def create_graph(source_directory, output_directory):
     for file in files_dict:
         graph.node(file, file)
     
-    # create a single edge between nodes with share the same message
+    # create a single edge between nodes with share the same message, from 'publish' to 'receive' or 'peek'
     for file in files_dict:
-        for msg in files_dict[file]:
+        for instance in files_dict[file]:
             for file2 in files_dict:
-                if file != file2:
-                    for msg2 in files_dict[file2]:
-                        if msg[1] == msg2[1]:
-                            graph.edge(file, file2, msg[0]+'.'+msg[1])
-                            break
-    # generate dot file
-    graph.render(output_path / 'umsg_graph', view=True)
+                for instance2 in files_dict[file2]:
+                    if instance[1] == instance2[1] and instance[2] == 'publish' and (instance2[2] == 'receive' or instance2[2] == 'peek'):
+                        # add graph edge dashed. if peek, add dashed edge
+                        if instance[2] == 'peek':
+                            graph.edge(file, file2, style='dashed', label=instance[0]+'.'+instance[1])
+                        else:
+                            graph.edge(file, file2, label=instance[0]+'.'+instance[1])
+                        break
+
+    # remove nodes which have no edges
+    for node in graph.body:
+        if '->' not in node:
+            graph.body.remove(node)
+    
+
+    # output graph settings
+    graph.body.append('rankdir=LR')
+
+    # generate graph file as svg
+    graph.render(output_path / 'umsg_graph', view=True, format='svg')
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
