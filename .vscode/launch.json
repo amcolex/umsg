@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-s","./tests/freertos/","-o","./graph"]
+            "args": ["-s","tests/graph/application/;tests/graph/drivers;tests/graph/modules","-c", "#99ffcc;#ff99cc;#6699ff","-o","./graph"]
         }
     ]
 }
