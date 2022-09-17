@@ -42,28 +42,28 @@ def create_graph(source_directory, output_directory):
 
     # create graph
     graph = graphviz.Digraph(comment='uMsg Graph')
-    # for each file create a node
-    for file in files_dict:
-        graph.node(file, file)
-    
-    # create a single edge between nodes with share the same message, from 'publish' to 'receive' or 'peek'
+
+    # list of nodes which contain links to other nodes
+    nodes = []
+    # create edges between nodes wich share a message, from 'publish' to 'receive' or 'peek'
     for file in files_dict:
         for instance in files_dict[file]:
             for file2 in files_dict:
                 for instance2 in files_dict[file2]:
                     if instance[1] == instance2[1] and instance[2] == 'publish' and (instance2[2] == 'receive' or instance2[2] == 'peek'):
+                        # add node to list if not already in it
+                        if file not in nodes:
+                            nodes.append(file)
                         # add graph edge dashed. if peek, add dashed edge
-                        if instance[2] == 'peek':
+                        if instance2[2] == 'peek':
                             graph.edge(file, file2, style='dashed', label=instance[0]+'.'+instance[1])
                         else:
                             graph.edge(file, file2, label=instance[0]+'.'+instance[1])
                         break
 
-    # remove nodes which have no edges
-    for node in graph.body:
-        if '->' not in node:
-            graph.body.remove(node)
-    
+    # for each node, setting display attributes
+    for node in nodes:
+        graph.node(node,shape='box')
 
     # output graph settings
     graph.body.append('rankdir=LR')

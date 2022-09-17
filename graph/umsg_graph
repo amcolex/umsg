@@ -1,9 +1,5 @@
 // uMsg Graph
 digraph {
-	test_multi_channels [label=test_multi_channels]
-	test_prescaler [label=test_prescaler]
-	test_single_pub_sub [label=test_single_pub_sub]
-	test_unused_messages [label=test_unused_messages]
 	test_length -> test_length [label="test.uints"]
 	test_length -> test_multi_channels [label="test.uints"]
 	test_length -> test_prescaler [label="test.uints"]
@@ -40,6 +36,14 @@ digraph {
 	test_types -> test_types [label="test.ints"]
 	test_types -> test_types [label="test.floats"]
 	test_types -> test_types [label="test.strings"]
+	test_types -> test_peek [label="test.bools" style=dashed]
 	test_types -> test_types [label="test.bools"]
 	test_types -> test_types [label="test.enums"]
+	test_length [shape=box]
+	test_multi_channels [shape=box]
+	test_peek [shape=box]
+	test_prescaler [shape=box]
+	test_single_pub_multi_sub [shape=box]
+	test_single_pub_sub [shape=box]
+	test_types [shape=box]
 rankdir=LR}

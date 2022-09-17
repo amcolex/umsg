@@ -1,6 +1,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include <umsg_sensors.h>
+#include <umsg_test.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,12 +22,17 @@ static void sub_task(void* params)
 {
     umsg_sub_handle_t sub = umsg_sensors_imu_subscribe(1,1);
     umsg_sensors_imu_t msg;
+    umsg_test_bools_t msg_bools;
     while(1) {
         umsg_sensors_imu_receive(sub,&msg,portMAX_DELAY);
 
         // peek imu data and check it matches
         umsg_sensors_imu_t peek_msg;
         umsg_sensors_imu_peek(&peek_msg);
+
+        // empty peek
+        umsg_test_bools_peek(&msg_bools);
+        
         if(memcmp(&msg,&peek_msg,sizeof(umsg_sensors_imu_t)) != 0)
         {
             printf("Peeked message does not match received message!");
