@@ -232,3 +232,7 @@ typedef struct {
 ```
 
 All of the topic.json files should be grouped in a single directory, which are then passed to the umsg-gen generator.
+
+# uMsg-Graph
+Generate communication flow graph of your code using graphiz, such as:
+![image](https://raw.githubusercontent.com/Amcolex/umsg/master/graph/umsg_graph.svg)
