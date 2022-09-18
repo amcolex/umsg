@@ -19,6 +19,7 @@ static void control_task(void* params)
     // subscribe state estimate and sonar messages
     umsg_sub_handle_t sub_att =  umsg_estimation_attitude_subscribe(1,1);
     umsg_sub_handle_t sub_sonar =  umsg_sensors_sonar_subscribe(1,1);
+    umsg_sub_handle_t sub_state =  umsg_system_state_subscribe(1,1);
 
 
     while(1) 
@@ -26,11 +27,11 @@ static void control_task(void* params)
         //  synchronize on state estimate and sonar messages
         umsg_estimation_attitude_receive(sub_att, &msg_att, portMAX_DELAY);
 
-        // peek at sonar message (async)
-        umsg_sensors_sonar_peek(&msg_sonar);
+        // receive sonar message with no timeout (async)
+        umsg_sensors_sonar_receive(sub_sonar, &msg_sonar, 0);
 
-        // peek at system state message (async)
-        umsg_system_state_peek(&msg_system_state);
+        // receive system state message with no timeout (async)
+        umsg_system_state_receive(sub_state, &msg_state, 0);
 
         // peek at user setpoints message (async)
         umsg_usercmd_setpoints_peek(&msg_usercmd_setpoints);
@@ -50,17 +51,3 @@ static void control_task(void* params)
       
     }
 }
-
-static void telemetry_task(void* params)
-{
-    umsg_motors_telemtry_t telem_msg;
-    while(1) 
-    {
-        // get motor telemetry via usart (RPM, current, temperature
-        usart_get_telem(&telem_msg)
-        // publish umsg
-        umsg_motors_telemtry_publish(&telem_msg);
-      
-    }
-}
-

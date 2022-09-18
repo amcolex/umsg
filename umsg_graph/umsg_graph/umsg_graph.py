@@ -46,9 +46,8 @@ def create_graph(source_directories, colors, output_directory):
             for function in api_calls:
                 # exctract function name
                 function_name = function.split('(')[0]
-                # extract function parameters
-                function_parameters = function.split('(')[1].split(')')[0].split(',')
-
+                # extract function parameters without spaces
+                function_parameters = function.split('(')[1].split(')')[0].replace(' ', '').split(',')
                 # split function name into umsg_topic_message_api tokens
                 function_tokens = function_name.split('_')
 
@@ -82,9 +81,10 @@ def create_graph(source_directories, colors, output_directory):
                                 # add edge to graph
                                 # if peek api, or receive with timeout parameter set to 0, then edge is dashed (async)
                                 if api_call2['api'] == 'peek' or (api_call2['api'] == 'receive' and api_call2['parameters'][2] == '0'):
-                                    graph.edge(node, node2, style='dashed', label=edge_label)
+                                    # add edge to graph with 'async' attribute
+                                    graph.edge(node, node2, style='dashed', label=edge_label, link_type='async')
                                 else:
-                                    graph.edge(node, node2, label=edge_label)
+                                    graph.edge(node, node2, label=edge_label,link_type='sync')
 
                                 # add to active nodes if not already there
                                 if node not in active_nodes_names:
@@ -94,8 +94,7 @@ def create_graph(source_directories, colors, output_directory):
 
     # for each node, setting display attributes: box and assigned color
     for node_name in active_nodes_names:
-        graph.node(node_name,shape='box')
-        graph.node(node_name,style='filled', fillcolor=nodes_dict[node_name]['color'])
+        graph.node(node_name,shape='box',style='filled', fillcolor=nodes_dict[node_name]['color'])
 
     # output graph settings
     graph.body.append('rankdir=LR')

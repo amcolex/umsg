@@ -25,6 +25,9 @@ static void user_command_task(void* params)
 
         // send user setpoints
         umsg_usercmd_setpoints_publish(&msg_usercmd_setpoints);
+
+        // send servo setpoints
+        umsg_servo_setpoint_publish(&msg_servo_setpoint);
         
     }
 }
