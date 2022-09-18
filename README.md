@@ -13,8 +13,8 @@ A Lightweight pub-sub library written in C for embedded systems.
 - Scalable. Builds a linked-list for an infinite number of publishers and subscribers.
 - Easily ported to other RTOS/OS (only needs to change one core file)
 
-It also include a communication flow chart generation tool - umsg-graph. Example:
-Example:
+Analyze your source code with umsg-graph, and generate a communication flow chart, such as:
+
 ![image](https://raw.githubusercontent.com/Amcolex/umsg/master/graph/umsg_graph.svg)
 
 # Quickstart
