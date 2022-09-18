@@ -3,6 +3,7 @@ import argparse
 import glob
 import re
 import graphviz
+import json
 
 def create_graph(source_directories, colors, output_directory):
 
@@ -84,7 +85,7 @@ def create_graph(source_directories, colors, output_directory):
                                     # add edge to graph with 'async' attribute
                                     graph.edge(node, node2, style='dashed', label=edge_label, link_type='async')
                                 else:
-                                    graph.edge(node, node2, label=edge_label,link_type='sync')
+                                    graph.edge(node, node2, label=edge_label,link_type='sync', penwidth='2')
 
                                 # add to active nodes if not already there
                                 if node not in active_nodes_names:
@@ -101,7 +102,58 @@ def create_graph(source_directories, colors, output_directory):
 
     # generate graph file as svg
     output_path = Path().resolve() / output_directory
-    graph.render(output_path / 'umsg_graph', view=True, format='svg')
+    graph.render(output_path / 'umsg_graph', view=False, format='svg')
+
+    return graph
+
+
+def create_hovermap(graph):
+    # determine which nodes and edges should be displayed when hovering over each node
+    # for async links, the depth search is 1
+    # for sync links, we search untill the end of the graph
+
+    # go through each edge by searching the graph body text untill no '->' is found
+    nodes_list = []
+    edges_list = []
+    for line in graph.body:
+        if '->' in line:
+            # split line into tokens
+            tokens = line.split(' ')
+
+            # extract node names, remove \t and \n
+            node1 = tokens[0].replace('\t', '').replace('\n', '')
+            node2 = tokens[2].replace('\t', '').replace('\n', '')
+
+            if node1 not in nodes_list:
+                nodes_list.append(node1)
+            if node2 not in nodes_list:
+                nodes_list.append(node2)
+
+            # find link_type=attribute in string
+            link_type = re.findall(r'link_type=\w+', line)[0].split('=')[1]
+
+            edges_list.append({'from':node1,'to': node2,'link_type':link_type})
+
+    # for each node, build a list of nodes and edges to display when hovering over it
+    # use the index values from nodes_list and edges_list
+    hovermap = []
+    for idx, node in enumerate(nodes_list):
+        hovermap.append({'nodes':[], 'edges':[]})
+
+        # go through all edges, if node is in edge, add the other node to the list
+        for edge in edges_list:
+            if node == edge['from']:
+                hovermap[idx]['nodes'].append(nodes_list.index(edge['to']))
+                hovermap[idx]['edges'].append(edges_list.index(edge))
+            elif node == edge['to']:
+                hovermap[idx]['nodes'].append(nodes_list.index(edge['from']))
+                hovermap[idx]['edges'].append(edges_list.index(edge))
+
+        # remove duplicates
+        hovermap[idx]['nodes'] = list(dict.fromkeys(hovermap[idx]['nodes']))
+        hovermap[idx]['edges'] = list(dict.fromkeys(hovermap[idx]['edges']))
+
+    return hovermap
 
 
 if __name__ == "__main__":
@@ -111,4 +163,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', dest='output_directory', required=True)
 
     args = parser.parse_args()
-    create_graph(args.source_directories, args.colors, args.output_directory)
+    graph = create_graph(args.source_directories, args.colors, args.output_directory)
+    hovermap = create_hovermap(graph)
+    jsonString = json.dumps(hovermap)
+    print(jsonString)

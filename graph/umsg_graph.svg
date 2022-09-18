@@ -43,8 +43,8 @@
 <!-- communication&#45;&gt;servo_driver -->
 <g id="edge3" class="edge">
 <title>communication&#45;&gt;servo_driver</title>
-<path fill="none" stroke="black" d="M286.63,-173.1C297.16,-176.99 308.39,-180.86 319,-184 356.91,-195.22 400.55,-204.75 433.78,-211.33"/>
-<polygon fill="black" stroke="black" points="433.26,-214.8 443.74,-213.28 434.6,-207.93 433.26,-214.8"/>
+<path fill="none" stroke="black" stroke-width="2" d="M286.63,-173.1C297.16,-176.99 308.39,-180.86 319,-184 356.91,-195.22 400.55,-204.75 433.78,-211.33"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="433.26,-214.8 443.74,-213.28 434.6,-207.93 433.26,-214.8"/>
 <text text-anchor="middle" x="370.5" y="-211.8" font-family="Times New Roman,serif" font-size="14.00">servo.setpoint</text>
 </g>
 <!-- motor_driver -->
@@ -56,15 +56,15 @@
 <!-- robot_control&#45;&gt;motor_driver -->
 <g id="edge4" class="edge">
 <title>robot_control&#45;&gt;motor_driver</title>
-<path fill="none" stroke="black" d="M535.05,-108.4C576.75,-114.12 637.93,-122.53 681.81,-128.56"/>
-<polygon fill="black" stroke="black" points="681.35,-132.03 691.74,-129.92 682.31,-125.09 681.35,-132.03"/>
+<path fill="none" stroke="black" stroke-width="2" d="M535.05,-108.4C576.75,-114.12 637.93,-122.53 681.81,-128.56"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="681.35,-132.03 691.74,-129.92 682.31,-125.09 681.35,-132.03"/>
 <text text-anchor="middle" x="613.5" y="-130.8" font-family="Times New Roman,serif" font-size="14.00">motors.speedsetpoint</text>
 </g>
 <!-- motor_driver&#45;&gt;communication -->
 <g id="edge5" class="edge">
 <title>motor_driver&#45;&gt;communication</title>
-<path fill="none" stroke="black" d="M691.72,-143.81C685.78,-144.66 679.75,-145.42 674,-146 516.94,-161.72 476.84,-157.02 319,-156 313.45,-155.96 307.68,-155.91 301.89,-155.85"/>
-<polygon fill="black" stroke="black" points="301.56,-152.35 291.53,-155.74 301.49,-159.35 301.56,-152.35"/>
+<path fill="none" stroke="black" stroke-width="2" d="M691.72,-143.81C685.78,-144.66 679.75,-145.42 674,-146 516.94,-161.72 476.84,-157.02 319,-156 313.45,-155.96 307.68,-155.91 301.89,-155.85"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="301.56,-152.35 291.53,-155.74 301.49,-159.35 301.56,-152.35"/>
 <text text-anchor="middle" x="487.5" y="-161.8" font-family="Times New Roman,serif" font-size="14.00">motors.telemtry</text>
 </g>
 <!-- imu_driver -->
@@ -82,15 +82,15 @@
 <!-- imu_driver&#45;&gt;attitude_estimation -->
 <g id="edge6" class="edge">
 <title>imu_driver&#45;&gt;attitude_estimation</title>
-<path fill="none" stroke="black" d="M77.12,-72C103.04,-72 138.28,-72 169.3,-72"/>
-<polygon fill="black" stroke="black" points="169.64,-75.5 179.64,-72 169.64,-68.5 169.64,-75.5"/>
+<path fill="none" stroke="black" stroke-width="2" d="M77.12,-72C103.04,-72 138.28,-72 169.3,-72"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="169.64,-75.5 179.64,-72 169.64,-68.5 169.64,-75.5"/>
 <text text-anchor="middle" x="128.5" y="-75.8" font-family="Times New Roman,serif" font-size="14.00">sensors.imu</text>
 </g>
 <!-- attitude_estimation&#45;&gt;robot_control -->
 <g id="edge8" class="edge">
 <title>attitude_estimation&#45;&gt;robot_control</title>
-<path fill="none" stroke="black" d="M301.01,-60.95C336.68,-56.47 382.61,-54.5 422,-65 432.89,-67.9 443.85,-73.12 453.57,-78.75"/>
-<polygon fill="black" stroke="black" points="451.75,-81.74 462.11,-83.97 455.4,-75.77 451.75,-81.74"/>
+<path fill="none" stroke="black" stroke-width="2" d="M301.01,-60.95C336.68,-56.47 382.61,-54.5 422,-65 432.89,-67.9 443.85,-73.12 453.57,-78.75"/>
+<polygon fill="black" stroke="black" stroke-width="2" points="451.75,-81.74 462.11,-83.97 455.4,-75.77 451.75,-81.74"/>
 <text text-anchor="middle" x="370.5" y="-68.8" font-family="Times New Roman,serif" font-size="14.00">estimation.attitude</text>
 </g>
 <!-- sonar_sensor -->
