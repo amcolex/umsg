@@ -11,7 +11,11 @@ A Lightweight pub-sub library written in C for embedded systems.
 - Uses the RTOS queue API for performance
 - Dead simple and efficient. (Core code less than 150 LoC!)
 - Scalable. Builds a linked-list for an infinite number of publishers and subscribers.
-- Easily ported to other RTOS/OS (only needs to change core file)
+- Easily ported to other RTOS/OS (only needs to change one core file)
+
+It also include a communication flow chart generation tool - umsg-graph. Example:
+Example:
+![image](https://raw.githubusercontent.com/Amcolex/umsg/master/graph/umsg_graph.svg)
 
 # Quickstart
 
@@ -231,8 +235,9 @@ typedef struct {
 } umsg_FILENAME_MESSAGENAME_t 
 ```
 
-All of the topic.json files should be grouped in a single directory, which are then passed to the umsg-gen generator.
+All of the topic.json files should be grouped in a single directory. which are then passed to the umsg-gen generator.
 
 # uMsg-Graph
-Generate communication flow graph of your code using graphiz, such as:
-![image](https://raw.githubusercontent.com/Amcolex/umsg/master/graph/umsg_graph.svg)
+(Work in Progress)
+
+
