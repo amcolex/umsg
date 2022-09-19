@@ -15,6 +15,7 @@ static void user_command_task(void* params)
     umsg_system_state_t msg_system_state;
     umsg_usercmd_setpoints_t msg_usercmd_setpoints;
     umsg_servo_setpoint_t msg_servo_setpoint;
+    umsg_lighting_cmd_t msg_lighting_cmd;
     while(1) 
     {
         //  receive usart commands and parse them
@@ -28,6 +29,9 @@ static void user_command_task(void* params)
 
         // send servo setpoints
         umsg_servo_setpoint_publish(&msg_servo_setpoint);
+
+        // send lighting commands
+        umsg_lighting_cmd_publish(&msg_lighting_cmd);
         
     }
 }
@@ -40,9 +44,11 @@ static void telemetry_task(void* params)
     while(1) 
     {
         // wait for motor telemetry
-        umsg_motors_telemtry_receive(sub, &telem_msg, portMAX_DELAY);
+        umsg_motors_telemtry_receive(sub, &telem_msg, 0);
 
         // send telemetry to user via usart communication
+
+        vTaskDelay(100)
       
     }
 }
