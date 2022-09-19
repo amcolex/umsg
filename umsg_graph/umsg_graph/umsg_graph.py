@@ -104,7 +104,9 @@ def create_graph(source_directories, colors, output_directory):
     output_path = Path().resolve() / output_directory
     graph.render(output_path / 'umsg_graph', view=False, format='svg')
 
-    return graph
+    hovermap = create_hovermap(graph)
+
+    update_svg(hovermap, output_path / 'umsg_graph.svg')
 
 
 def create_hovermap(graph):
@@ -137,6 +139,10 @@ def create_hovermap(graph):
     # for each node, build a list of nodes and edges to display when hovering over it
     # use the index values from nodes_list and edges_list
     hovermap = {}
+    # add number of nodes and edges to the hovermap
+    hovermap['length'] = ({'n_nodes':len(nodes_list), 'n_edges':len(edges_list)})
+
+    # add map for each node
     hovermap['maps'] = []
     for idx, node in enumerate(nodes_list):
         hovermap['maps'].append({'nodes':[], 'edges':[]})
@@ -156,10 +162,27 @@ def create_hovermap(graph):
         hovermap['maps'][idx]['nodes'] = list(dict.fromkeys(hovermap['maps'][idx]['nodes']))
         hovermap['maps'][idx]['edges'] = list(dict.fromkeys(hovermap['maps'][idx]['edges']))
 
-    # add number of nodes and edges to the hovermap
-    hovermap['length'] = ({'n_nodes':len(nodes_list), 'n_edges':len(edges_list)})
     return hovermap
 
+
+def update_svg(hovermap,file_path):
+    # create hovermap json
+    hovermap_json = json.dumps(hovermap)
+    snippet = "<script type='text/javascript'><![CDATA["
+    snippet += "var hovermap = " + hovermap_json + ";"
+    snippet += "hovermap.maps.forEach(function(e,t){let n=`node${t+1}`;document.getElementById(n).addEventListener('mouseover',function(){for(let e=0;e<hovermap.length.n_nodes;e++)hovermap.maps[t].nodes.includes(e)?document.getElementById(`node${e+1}`).style.opacity=1:document.getElementById(`node${e+1}`).style.opacity=.2;for(let n=0;n<hovermap.length.n_edges;n++)hovermap.maps[t].edges.includes(n)?document.getElementById(`edge${n+1}`).style.opacity=1:document.getElementById(`edge${n+1}`).style.opacity=.2}),document.getElementById(n).addEventListener('mouseout',function(){for(let e=0;e<hovermap.length.n_nodes;e++)document.getElementById(`node${e+1}`).style.opacity=1;for(let t=0;t<hovermap.length.n_edges;t++)document.getElementById(`edge${t+1}`).style.opacity=1})});"
+    snippet += "]]></script>"
+
+    # add snippet at end of file, before </svg> tag
+    with open(file_path, 'r') as file:
+        filedata = file.read()
+    filedata = filedata.replace('</svg>', snippet + '\n</svg>')
+    with open(file_path, 'w') as file:
+        file.write(filedata)
+
+
+
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -169,6 +192,3 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     graph = create_graph(args.source_directories, args.colors, args.output_directory)
-    hovermap = create_hovermap(graph)
-    jsonString = json.dumps(hovermap)
-    print(jsonString)

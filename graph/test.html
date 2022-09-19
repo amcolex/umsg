@@ -4,189 +4,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Test umsg_graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 
 </head>
 
 <body>
-    <svg width="790pt" height="247pt" viewBox="0.00 0.00 790.00 247.00" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 243)">
-            <polygon fill="white" stroke="none" points="-4,4 -4,-243 786,-243 786,4 -4,4" />
-            <!-- communication -->
-            <g id="node1" class="node">
-                <title>communication</title>
-                <polygon fill="#99ffcc" stroke="black"
-                    points="291.5,-173 189.5,-173 189.5,-137 291.5,-137 291.5,-173" />
-                <text text-anchor="middle" x="240.5" y="-151.3" font-family="Times New Roman,serif"
-                    font-size="14.00">communication</text>
-            </g>
-            <!-- robot_control -->
-            <g id="node2" class="node">
-                <title>robot_control</title>
-                <polygon fill="#99ffcc" stroke="black" points="535,-120 440,-120 440,-84 535,-84 535,-120" />
-                <text text-anchor="middle" x="487.5" y="-98.3" font-family="Times New Roman,serif"
-                    font-size="14.00">robot_control</text>
-            </g>
-            <!-- communication&#45;&gt;robot_control -->
-            <g id="edge1" class="edge">
-                <title>communication&#45;&gt;robot_control</title>
-                <path fill="none" stroke="black" stroke-dasharray="5,2"
-                    d="M291.8,-145.26C328.08,-138.1 378.17,-127.93 422,-118 424.6,-117.41 427.26,-116.8 429.94,-116.17" />
-                <polygon fill="black" stroke="black"
-                    points="430.78,-119.57 439.7,-113.85 429.16,-112.76 430.78,-119.57" />
-                <text text-anchor="middle" x="370.5" y="-143.8" font-family="Times New Roman,serif"
-                    font-size="14.00">system.state</text>
-            </g>
-            <!-- communication&#45;&gt;robot_control -->
-            <g id="edge2" class="edge">
-                <title>communication&#45;&gt;robot_control</title>
-                <path fill="none" stroke="black" stroke-dasharray="5,2"
-                    d="M259.36,-137C273.98,-123.62 295.94,-106.46 319,-99 354.61,-87.48 396.75,-88.3 429.85,-91.96" />
-                <polygon fill="black" stroke="black" points="429.46,-95.44 439.81,-93.18 430.31,-88.5 429.46,-95.44" />
-                <text text-anchor="middle" x="370.5" y="-102.8" font-family="Times New Roman,serif"
-                    font-size="14.00">usercmd.setpoints</text>
-            </g>
-            <!-- servo_driver -->
-            <g id="node3" class="node">
-                <title>servo_driver</title>
-                <polygon fill="#ff99cc" stroke="black" points="531,-239 444,-239 444,-203 531,-203 531,-239" />
-                <text text-anchor="middle" x="487.5" y="-217.3" font-family="Times New Roman,serif"
-                    font-size="14.00">servo_driver</text>
-            </g>
-            <!-- communication&#45;&gt;servo_driver -->
-            <g id="edge3" class="edge">
-                <title>communication&#45;&gt;servo_driver</title>
-                <path fill="none" stroke="black"
-                    d="M286.63,-173.1C297.16,-176.99 308.39,-180.86 319,-184 356.91,-195.22 400.55,-204.75 433.78,-211.33" />
-                <polygon fill="black" stroke="black"
-                    points="433.26,-214.8 443.74,-213.28 434.6,-207.93 433.26,-214.8" />
-                <text text-anchor="middle" x="370.5" y="-211.8" font-family="Times New Roman,serif"
-                    font-size="14.00">servo.setpoint</text>
-            </g>
-            <!-- motor_driver -->
-            <g id="node4" class="node">
-                <title>motor_driver</title>
-                <polygon fill="#ff99cc" stroke="black" points="782,-154 692,-154 692,-118 782,-118 782,-154" />
-                <text text-anchor="middle" x="737" y="-132.3" font-family="Times New Roman,serif"
-                    font-size="14.00">motor_driver</text>
-            </g>
-            <!-- robot_control&#45;&gt;motor_driver -->
-            <g id="edge4" class="edge">
-                <title>robot_control&#45;&gt;motor_driver</title>
-                <path fill="none" stroke="black" d="M535.05,-108.4C576.75,-114.12 637.93,-122.53 681.81,-128.56" />
-                <polygon fill="black" stroke="black"
-                    points="681.35,-132.03 691.74,-129.92 682.31,-125.09 681.35,-132.03" />
-                <text text-anchor="middle" x="613.5" y="-130.8" font-family="Times New Roman,serif"
-                    font-size="14.00">motors.speedsetpoint</text>
-            </g>
-            <!-- motor_driver&#45;&gt;communication -->
-            <g id="edge5" class="edge">
-                <title>motor_driver&#45;&gt;communication</title>
-                <path fill="none" stroke="black"
-                    d="M691.72,-143.81C685.78,-144.66 679.75,-145.42 674,-146 516.94,-161.72 476.84,-157.02 319,-156 313.45,-155.96 307.68,-155.91 301.89,-155.85" />
-                <polygon fill="black" stroke="black"
-                    points="301.56,-152.35 291.53,-155.74 301.49,-159.35 301.56,-152.35" />
-                <text text-anchor="middle" x="487.5" y="-161.8" font-family="Times New Roman,serif"
-                    font-size="14.00">motors.telemtry</text>
-            </g>
-            <!-- imu_driver -->
-            <g id="node5" class="node">
-                <title>imu_driver</title>
-                <polygon fill="#ff99cc" stroke="black" points="77,-90 0,-90 0,-54 77,-54 77,-90" />
-                <text text-anchor="middle" x="38.5" y="-68.3" font-family="Times New Roman,serif"
-                    font-size="14.00">imu_driver</text>
-            </g>
-            <!-- attitude_estimation -->
-            <g id="node6" class="node">
-                <title>attitude_estimation</title>
-                <polygon fill="#6699ff" stroke="black" points="301,-90 180,-90 180,-54 301,-54 301,-90" />
-                <text text-anchor="middle" x="240.5" y="-68.3" font-family="Times New Roman,serif"
-                    font-size="14.00">attitude_estimation</text>
-            </g>
-            <!-- imu_driver&#45;&gt;attitude_estimation -->
-            <g id="edge6" class="edge">
-                <title>imu_driver&#45;&gt;attitude_estimation</title>
-                <path fill="none" stroke="black" d="M77.12,-72C103.04,-72 138.28,-72 169.3,-72" />
-                <polygon fill="black" stroke="black" points="169.64,-75.5 179.64,-72 169.64,-68.5 169.64,-75.5" />
-                <text text-anchor="middle" x="128.5" y="-75.8" font-family="Times New Roman,serif"
-                    font-size="14.00">sensors.imu</text>
-            </g>
-            <!-- attitude_estimation&#45;&gt;robot_control -->
-            <g id="edge8" class="edge">
-                <title>attitude_estimation&#45;&gt;robot_control</title>
-                <path fill="none" stroke="black"
-                    d="M301.01,-60.95C336.68,-56.47 382.61,-54.5 422,-65 432.89,-67.9 443.85,-73.12 453.57,-78.75" />
-                <polygon fill="black" stroke="black" points="451.75,-81.74 462.11,-83.97 455.4,-75.77 451.75,-81.74" />
-                <text text-anchor="middle" x="370.5" y="-68.8" font-family="Times New Roman,serif"
-                    font-size="14.00">estimation.attitude</text>
-            </g>
-            <!-- sonar_sensor -->
-            <g id="node7" class="node">
-                <title>sonar_sensor</title>
-                <polygon fill="#ff99cc" stroke="black" points="286.5,-36 194.5,-36 194.5,0 286.5,0 286.5,-36" />
-                <text text-anchor="middle" x="240.5" y="-14.3" font-family="Times New Roman,serif"
-                    font-size="14.00">sonar_sensor</text>
-            </g>
-            <!-- sonar_sensor&#45;&gt;robot_control -->
-            <g id="edge7" class="edge">
-                <title>sonar_sensor&#45;&gt;robot_control</title>
-                <path fill="none" stroke="black" stroke-dasharray="5,2"
-                    d="M286.74,-15.35C324.65,-14.93 379.28,-18.64 422,-39 439.55,-47.37 455.26,-62.45 466.78,-75.75" />
-                <polygon fill="black" stroke="black" points="464.31,-78.27 473.38,-83.74 469.7,-73.8 464.31,-78.27" />
-                <text text-anchor="middle" x="370.5" y="-42.8" font-family="Times New Roman,serif"
-                    font-size="14.00">sensors.sonar</text>
-            </g>
-        </g>
-    </svg>
-</body>
 
-<script>
-
-    hovermap = { "maps": [{ "nodes": [1, 2, 3, 0], "edges": [0, 2, 4] }, { "nodes": [0, 3, 6, 5, 1], "edges": [0, 3, 6, 7] }, { "nodes": [0, 2], "edges": [2] }, { "nodes": [1, 0, 3], "edges": [3, 4] }, { "nodes": [5, 4], "edges": [5] }, { "nodes": [4, 1, 5], "edges": [5, 7] }, { "nodes": [1, 6], "edges": [6] }], "length": { "n_nodes": 7, "n_edges": 8 } }
-    console.log(hovermap);
-
-    hovermap.maps.forEach(function (item, index) {
-        // if user clicks on element #node1, then set color to red. using event listener
-        let element_id = `node${index + 1}`;
-        console.log(element_id);
-
-        // if mousover on node, then highlight all edges and nodes
-        document.getElementById(element_id).addEventListener("click", function () {
-            // make all nodes not in hovermap[index].nodes opaque
-            for (let i = 0; i < hovermap['length']['n_nodes']; i++) {
-                if (hovermap['maps'][index].nodes.includes(i)) {
-                    document.getElementById(`node${i + 1}`).style.opacity = 1;
-                } else {
-                    document.getElementById(`node${i + 1}`).style.opacity = 0.2;
-                }
-            }
-
-            // make all edges not in hovermap[index].edges opaque
-            for (let i = 0; i < hovermap['length']['n_edges']; i++) {
-                if (hovermap['maps'][index].edges.includes(i)) {
-                    document.getElementById(`edge${i + 1}`).style.opacity = 1;
-                } else {
-                    document.getElementById(`edge${i + 1}`).style.opacity = 0.2;
-                }
-            }
-
+    <object id="graph" data="umsg_graph.svg" style="width: 100%; height: 100%; border:1px solid; margin: 5px black;"></object>
+    <script>
+      // Don't use window.onLoad like this in production, because it can only listen to one function.
+      window.onload = function() {
+        svgPanZoom('#graph', {
+          zoomEnabled: true,
+          controlIconsEnabled: true
         });
+      };
+    </script>
 
-        // if click on outside of a node, then reset all nodes and edges to opaque
-        document.getElementById(element_id).addEventListener("mouseout", function () {
-            // make all nodes not in hovermap[index].nodes opaque
-            for (let i = 0; i < hovermap['length']['n_nodes']; i++) {
-                document.getElementById(`node${i + 1}`).style.opacity = 1;
-            }
-
-            // make all edges not in hovermap[index].edges opaque
-            for (let i = 0; i < hovermap['length']['n_edges']; i++) {
-                document.getElementById(`edge${i + 1}`).style.opacity = 1;
-            }
-        });
-    });
-
-
-</script>
+  </body>
 
 </html>
