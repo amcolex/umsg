@@ -85,7 +85,7 @@ def create_graph(source_directories, colors, output_directory):
                                     # add edge to graph with 'async' attribute
                                     graph.edge(node, node2, style='dashed', label=edge_label, link_type='async')
                                 else:
-                                    graph.edge(node, node2, label=edge_label,link_type='sync', penwidth='2')
+                                    graph.edge(node, node2, label=edge_label,link_type='sync')
 
                                 # add to active nodes if not already there
                                 if node not in active_nodes_names:
@@ -136,23 +136,28 @@ def create_hovermap(graph):
 
     # for each node, build a list of nodes and edges to display when hovering over it
     # use the index values from nodes_list and edges_list
-    hovermap = []
+    hovermap = {}
+    hovermap['maps'] = []
     for idx, node in enumerate(nodes_list):
-        hovermap.append({'nodes':[], 'edges':[]})
+        hovermap['maps'].append({'nodes':[], 'edges':[]})
 
         # go through all edges, if node is in edge, add the other node to the list
         for edge in edges_list:
             if node == edge['from']:
-                hovermap[idx]['nodes'].append(nodes_list.index(edge['to']))
-                hovermap[idx]['edges'].append(edges_list.index(edge))
+                hovermap['maps'][idx]['nodes'].append(nodes_list.index(edge['to']))
+                hovermap['maps'][idx]['edges'].append(edges_list.index(edge))
             elif node == edge['to']:
-                hovermap[idx]['nodes'].append(nodes_list.index(edge['from']))
-                hovermap[idx]['edges'].append(edges_list.index(edge))
+                hovermap['maps'][idx]['nodes'].append(nodes_list.index(edge['from']))
+                hovermap['maps'][idx]['edges'].append(edges_list.index(edge))
+        # add the node itself to the list
+        hovermap['maps'][idx]['nodes'].append(idx)
 
         # remove duplicates
-        hovermap[idx]['nodes'] = list(dict.fromkeys(hovermap[idx]['nodes']))
-        hovermap[idx]['edges'] = list(dict.fromkeys(hovermap[idx]['edges']))
+        hovermap['maps'][idx]['nodes'] = list(dict.fromkeys(hovermap['maps'][idx]['nodes']))
+        hovermap['maps'][idx]['edges'] = list(dict.fromkeys(hovermap['maps'][idx]['edges']))
 
+    # add number of nodes and edges to the hovermap
+    hovermap['length'] = ({'n_nodes':len(nodes_list), 'n_edges':len(edges_list)})
     return hovermap
 
 
