@@ -29,6 +29,11 @@ umsg_{{topic_dict.name}}_{{type.lower()}}_t
 {% endmacro %}
 // Generated with umsg_gen on {{ date }}
 #pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <umsg_types.h>
 
 // msg structure typedefs
@@ -66,4 +71,9 @@ uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data
 uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data);
 
 {% endfor %}
+
+#ifdef __cplusplus
+}
+#endif
+
 

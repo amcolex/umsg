@@ -1,5 +1,10 @@
-// Generated with umsg_gen on 2022-09-19
+// Generated with umsg_gen on 2024-08-05
 #pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <umsg_types.h>
 
 // msg structure typedefs
@@ -29,4 +34,9 @@ void umsg_unused_unused_var_publish(umsg_unused_unused_var_t* data);
 void umsg_unused_unused_var_publish_ch(umsg_unused_unused_var_t* data, uint8_t channel);
 uint8_t umsg_unused_unused_var_receive(umsg_sub_handle_t queue, umsg_unused_unused_var_t* data, uint32_t timeout);
 uint8_t umsg_unused_unused_var_peek(umsg_unused_unused_var_t* data);
+
+
+#ifdef __cplusplus
+}
+#endif
 
