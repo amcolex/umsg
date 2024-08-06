@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-05
+// Generated with umsg_gen on 2024-08-06
 #pragma once
 
 #ifdef __cplusplus
@@ -15,6 +15,21 @@ typedef enum
     ENUM_B,
     ENUM_C
 } umsg_test_enum_test_t;
+
+
+//enumeration of topics
+typedef enum
+{
+    TEST_FLOATS, 
+    TEST_UINTS, 
+    TEST_INTS, 
+    TEST_STRINGS, 
+    TEST_BOOLS, 
+    TEST_ENUMS, 
+    TEST_BITFIELD
+} umsg_enum_test_t;
+
+
 
 typedef struct
 {

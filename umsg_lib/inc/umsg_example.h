@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-05
+// Generated with umsg_gen on 2024-08-06
 #pragma once
 
 #ifdef __cplusplus
@@ -15,6 +15,16 @@ typedef enum
     BLUE,
     READ
 } umsg_example_colors_t;
+
+
+//enumeration of topics
+typedef enum
+{
+    EXAMPLE_COLOR_SELECTION, 
+    EXAMPLE_SIMPLE_MSG
+} umsg_enum_example_t;
+
+
 
 typedef struct
 {

@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-05
+// Generated with umsg_gen on 2024-08-06
 #pragma once
 
 #ifdef __cplusplus
@@ -8,6 +8,16 @@ extern "C" {
 #include <umsg_types.h>
 
 // msg structure typedefs
+
+//enumeration of topics
+typedef enum
+{
+    UNUSED_USED_VAR, 
+    UNUSED_UNUSED_VAR
+} umsg_enum_unused_t;
+
+
+
 typedef struct
 {
     uint8_t a;

@@ -49,6 +49,17 @@ typedef enum
 
 {%endfor%}
 {% endif %}
+
+//enumeration of topics
+typedef enum
+{
+{% for msg_dict in topic_dict.msgs %}
+    {{topic_dict.name.upper()}}_{{msg_dict.name.upper()}}{{', ' if not loop.last else ''}}
+{% endfor -%}
+} umsg_enum_{{topic_dict.name}}_t;
+
+
+
 {% for msg_dict in topic_dict.msgs %}
 typedef struct
 {

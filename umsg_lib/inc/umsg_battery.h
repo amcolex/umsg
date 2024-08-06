@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-05
+// Generated with umsg_gen on 2024-08-06
 #pragma once
 
 #ifdef __cplusplus
@@ -15,6 +15,15 @@ typedef enum
     BATTERY_LOW,
     BATTERY_DEAD
 } umsg_battery_battery_state_t;
+
+
+//enumeration of topics
+typedef enum
+{
+    BATTERY_STATE
+} umsg_enum_battery_t;
+
+
 
 typedef struct
 {
