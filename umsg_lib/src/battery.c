@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2022-09-19
+// Generated with umsg_gen on 2024-08-05
 #include <umsg.h>
 #include <umsg_battery.h>
 

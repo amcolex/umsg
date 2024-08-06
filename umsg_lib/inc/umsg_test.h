@@ -1,5 +1,10 @@
-// Generated with umsg_gen on 2022-09-19
+// Generated with umsg_gen on 2024-08-05
 #pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <umsg_types.h>
 
 // msg structure typedefs
@@ -115,4 +120,9 @@ void umsg_test_bitfield_publish(umsg_test_bitfield_t* data);
 void umsg_test_bitfield_publish_ch(umsg_test_bitfield_t* data, uint8_t channel);
 uint8_t umsg_test_bitfield_receive(umsg_sub_handle_t queue, umsg_test_bitfield_t* data, uint32_t timeout);
 uint8_t umsg_test_bitfield_peek(umsg_test_bitfield_t* data);
+
+
+#ifdef __cplusplus
+}
+#endif
 

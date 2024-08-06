@@ -1,5 +1,10 @@
-// Generated with umsg_gen on 2022-09-19
+// Generated with umsg_gen on 2024-08-05
 #pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <umsg_types.h>
 
 // msg structure typedefs
@@ -38,4 +43,9 @@ void umsg_example_simple_msg_publish(umsg_example_simple_msg_t* data);
 void umsg_example_simple_msg_publish_ch(umsg_example_simple_msg_t* data, uint8_t channel);
 uint8_t umsg_example_simple_msg_receive(umsg_sub_handle_t queue, umsg_example_simple_msg_t* data, uint32_t timeout);
 uint8_t umsg_example_simple_msg_peek(umsg_example_simple_msg_t* data);
+
+
+#ifdef __cplusplus
+}
+#endif
 

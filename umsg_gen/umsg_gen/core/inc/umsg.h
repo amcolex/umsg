@@ -4,6 +4,11 @@
 
 #ifndef UMSG_UMSG_H
 #define UMSG_UMSG_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <umsg_types.h>
 
 typedef struct
@@ -27,5 +32,10 @@ umsg_sub_handle_t umsg_subscribe(umsg_msg_metadata_t* msg, uint16_t prescaler, u
 void umsg_publish(umsg_msg_metadata_t* msg, void* data, uint8_t ch_id);
 uint8_t umsg_receive(umsg_sub_handle_t queue, void* data, uint32_t timeout);
 uint8_t umsg_peek(umsg_msg_metadata_t* msg, void* data, uint32_t size);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif //UMSG_UMSG_H

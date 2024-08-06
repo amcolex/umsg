@@ -27,7 +27,7 @@ def main():
     cmake_template = env.get_template(name='CMakeLists.txt.j2')
 
     # find all topic json files
-    files = glob.glob(f'{msg_def_path}\*.json')
+    files = glob.glob(f'{msg_def_path}/*.json')
 
     # if files list is empty return error
     if not files:
