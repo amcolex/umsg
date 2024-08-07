@@ -22,6 +22,8 @@ def main():
     env = Environment(loader=FileSystemLoader(templates_path))
     env.trim_blocks = True
     env.lstrip_blocks = True
+    
+    msg_class_inc_template = env.get_template(name='msg_classes.h.j2')
     inc_template = env.get_template(name='msg.h.j2')
     src_template = env.get_template(name='msg.c.j2')
     cmake_template = env.get_template(name='CMakeLists.txt.j2')
@@ -33,18 +35,18 @@ def main():
     if not files:
         print('No files found')
         exit(1)
-
+    print(files)
     # generate source and header files for each topic json file
 
     # delete output directory if it exists
     if output_path.exists():
         shutil.rmtree(output_path)
     sources = []
+    headers = []
     for file in files:
         # load topic json file
         f = open(file)
         topic_dict = json.load(f)
-
         # add name field to topic dict
         topic_dict['name'] = Path(file).stem
 
@@ -64,6 +66,12 @@ def main():
 
         # add file name to list
         sources.append(Path(filename).name)
+        headers.append(f'umsg_{topic_dict["name"]}')
+    # Generate the msg_classes header file
+    content = msg_class_inc_template.render(headers=headers, date=datetime.date.today())
+    filename = f'{output_path}/inc/msg_classes.h'
+    with open(filename, mode="w", encoding="utf-8") as message:
+        message.write(content)
 
     # Gereate cmake file
     content = cmake_template.render(sources=sources, date=datetime.date.today())
