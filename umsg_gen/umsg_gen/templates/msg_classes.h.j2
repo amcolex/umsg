@@ -7,11 +7,6 @@ extern "C" {
 
 #include <umsg_types.h>
 
-{%for head in headers%}
-#include <{{head}}.h>
-{% endfor -%}
-
-
 typedef enum
 {
 {% for val in headers%}

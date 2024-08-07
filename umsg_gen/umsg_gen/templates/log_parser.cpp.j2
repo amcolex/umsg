@@ -1,0 +1,192 @@
+// Generated with umsg_gen on {{ date }}
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdlib.h>
+#include <filesystem>
+#include <stdio.h>
+
+
+#include"umsg_classes.h"
+
+{% for val in topic_dict_list%}
+#include<umsg_{{val.name}}.h>
+{%endfor%}
+
+
+
+
+//globally defined streams for topic files
+
+{% for dict in topic_dict_list%}
+{% for msg_dict in dict.msgs%}
+std::ofstream file_{{dict.name}}_{{msg_dict.name}};
+{%endfor%}
+{%endfor%}
+
+
+
+
+
+{% for dict in topic_dict_list%}  
+void sort_{{dict.name}}_type(std::ifstream &file)
+{
+    uint8_t msg_type;
+    file.read((char *)&msg_type, 1);
+    if (!file) {
+        std::cerr << std::endl << "Error reading file" << std::endl;
+        exit(2);
+    }
+
+    switch(msg_type)
+    {
+{% for msg_dict in dict.msgs%}
+        case {{dict.name.upper()}}_{{msg_dict.name.upper()}}:
+            {
+            char buffer[sizeof(umsg_{{dict.name}}_{{msg_dict.name}}_t)];
+            file.read(buffer,sizeof(umsg_{{dict.name}}_{{msg_dict.name}}_t));
+            umsg_{{dict.name}}_{{msg_dict.name}}_t*  message = reinterpret_cast<umsg_{{dict.name}}_{{msg_dict.name}}_t *> (buffer);
+
+            {% for field in msg_dict.fields %}
+            {% if not field.bitfield %}
+            {% if field.length %}
+                for(uint32_t i=0;i<{{field.length}}; i++){ file_{{dict.name}}_{{msg_dict.name}} << message->{{field.name}}[i] << ", " ;}
+            {% endif %}
+            {% if not field.length %}    
+            file_{{dict.name}}_{{msg_dict.name}} << message->{{field.name}}{% if not loop.last%} << ", "{% endif %};
+            {% endif %}
+            {% endif %}
+            {% if field.bitfield %}
+            {%for bitfield in field.bitfield %}
+            file_{{dict.name}}_{{msg_dict.name}} << message->{{bitfield.name}}{% if not loop.last%} << ", "{% endif %};
+            {%endfor%}
+            {% endif %}
+            {% endfor %}
+
+            file_{{dict.name}}_{{msg_dict.name}} << std::endl;
+            }
+            break;
+{%endfor%}
+        default:
+        std::cerr << std::endl << "ERROR UNKNOWN MESSAGE TYPE: " << static_cast<int>(msg_type) << std::endl;
+        exit(1);
+        break;
+    }
+}
+{%endfor%}
+
+
+void sort_msg(std::ifstream &file)
+{
+    if (!file.is_open()) {
+        std::cerr << std::endl << "Error opening logfile" << std::endl;
+        return;
+    }
+
+    uint8_t msg_class;
+    file.read((char *)&msg_class, 1);
+    if (!file) {
+        std::cerr << std::endl << "Error reading file" << std::endl;
+        return;
+    }
+
+    switch(msg_class)
+    {    
+{% for dict in topic_dict_list%}  
+    case UMSG_{{dict.name.upper()}}:
+            {
+                sort_{{dict.name}}_type(file);
+            }
+        break;
+{%endfor%}
+
+        default:
+            {
+            std::cerr << std::endl << "ERROR UNKNOWN MESSAGE CLASS: " << static_cast<int>(msg_class) << std::endl;
+            exit(1);
+            }
+        break;
+    }
+}
+
+
+
+
+std::string split_by_last_dot(const std::string &str) {
+    size_t last_dot_pos = str.find_last_of('.');
+    if (last_dot_pos == std::string::npos) {
+        return str;  // No dot found, return the whole string
+    }
+    return str.substr(0, last_dot_pos);
+}
+
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        std::cerr << std::endl << "Usage: " << argv[0] << " <file_path>" << std::endl;
+        return 1;
+    }
+   
+    //proceed to open the file
+    const std::string file_path = argv[1];
+    std::ifstream file(file_path,std::ios::binary);
+    if(!file || !file.is_open())
+    {
+        std::cerr << std::endl << "Could not open the logfile, aborting" << std::endl;
+        return 2;
+    }
+    std::cout << "file size is: " << std::filesystem::file_size(file_path) << " bytes" << std::endl;
+    
+    //create directories based on the log name and open the files for all of the possible log messages 
+
+    std::string logname = split_by_last_dot(file_path);
+    std::filesystem::create_directory(logname);
+    // here we will generate the subdirectories and open files for the messages
+    std::string fpath;
+    std::string dirpath;
+{% for dict in topic_dict_list%}
+    dirpath=  logname + "/" + "{{dict.name}}";
+    std::filesystem::create_directory(dirpath);
+{% for msg_dict in dict.msgs%}
+    fpath = logname + "/{{dict.name}}/{{msg_dict.name}}.csv";
+    file_{{dict.name}}_{{msg_dict.name}} = std::ofstream(fpath);
+    {% for field in msg_dict.fields %}
+    {% if not field.bitfield %}
+    {% if field.length %}
+        for(uint32_t i=0;i<{{field.length}}; i++){ file_{{dict.name}}_{{msg_dict.name}} <<"{{field.name}}" << i << ", ";}
+    {% endif %}
+    {% if not field.length %}    
+    file_{{dict.name}}_{{msg_dict.name}} << "{{field.name}}"{% if not loop.last%} << ", "{% endif %};
+    {% endif %}
+    {% endif %}
+    {% if field.bitfield %}
+    {%for bitfield in field.bitfield %}
+    file_{{dict.name}}_{{msg_dict.name}} << "{{bitfield.name}}"{% if not loop.last%} << ", "{% endif %};
+    {%endfor%}
+    {% endif %}
+    {% endfor %}
+
+    file_{{dict.name}}_{{msg_dict.name}} << std::endl;
+{%endfor%}
+{%endfor%}
+    while(file.tellg()!= std::filesystem::file_size(file_path))
+    {
+        std::cout << "cursor at: " << file.tellg() << " from " << std::filesystem::file_size(file_path) << "\r";
+        sort_msg(file);
+    }
+
+    // close all the files
+{% for dict in topic_dict_list%}
+{% for msg_dict in dict.msgs%}
+    file_{{dict.name}}_{{msg_dict.name}}.close();
+{%endfor%}
+{%endfor%}
+
+
+    //close the logfile
+    file.close();
+    std::cout <<std::endl << "file parsed sucesfully" << std::endl;
+    return 0;
+}
+

@@ -36,6 +36,7 @@ extern "C" {
 
 #include <umsg_types.h>
 
+#include "umsg_classes.h"
 // msg structure typedefs
 {%if topic_dict.enums %}
 
@@ -81,7 +82,18 @@ void umsg_{{prefix}}_publish_ch(umsg_{{prefix}}_t* data, uint8_t channel);
 uint8_t umsg_{{prefix}}_receive(umsg_sub_handle_t queue, umsg_{{prefix}}_t* data, uint32_t timeout);
 uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data);
 
+
+{%if log == "do_log"%}
+//function headers for converting to binary format that can be used for message passing or logging the first symbols in the buffer indicate the message class and type
+//for now lets assume that there are less than 255 message classes and 255 message types per class, this has to be fixed in the future
+//please take care that the messages are build properly to avoid padding issues if the messages are opened on different system
+uint32_t umsg_{{prefix}}_serialize(umsg_{{prefix}}_t* data, uint8_t* buffer);
+uint8_t umsg_{{prefix}}_deserialize(umsg_{{prefix}}_t* data,uint8_t* buffer); // this function includes check that the message type is correct
+{% endif %}
+
 {% endfor %}
+
+
 
 #ifdef __cplusplus
 }

@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-06
+// Generated with umsg_gen on 2024-08-07
 #pragma once
 
 #ifdef __cplusplus
@@ -7,12 +7,6 @@ extern "C" {
 
 #include <umsg_types.h>
 
-#include <umsg_battery.h>
-#include <umsg_control.h>
-#include <umsg_unused.h>
-#include <umsg_test.h>
-#include <umsg_sensors.h>
-#include <umsg_example.h>
 typedef enum
 {
 UMSG_BATTERY,
