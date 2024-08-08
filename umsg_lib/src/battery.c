@@ -1,4 +1,4 @@
-// Generated with umsg_gen on 2024-08-05
+// Generated with umsg_gen on 2024-08-07
 #include <umsg.h>
 #include <umsg_battery.h>
 
@@ -32,3 +32,39 @@ uint8_t umsg_battery_state_peek(umsg_battery_state_t* data)
     return umsg_peek(&msg_battery_state, data, sizeof(umsg_battery_state_t));
 }
 
+
+
+
+uint32_t umsg_battery_state_serialize(umsg_battery_state_t* data, uint8_t* buffer)
+{
+    uint32_t len = 2;
+    buffer[0] = UMSG_BATTERY;
+    buffer[1] = BATTERY_STATE;
+    char *flattened_data = (char *)data;
+    for(uint32_t i = 0; i < sizeof(umsg_battery_state_t);i++)
+    {
+        buffer[len] = flattened_data[i];
+        len++;
+    }
+    return len;
+}
+
+
+//for now lets assume that there are less than 255 message classes and 255 message types per class, this has to be fixed in the future
+uint8_t umsg_battery_state_deserialize(umsg_battery_state_t* data,uint8_t* buffer)
+{
+    if(buffer[0]!=UMSG_BATTERY || buffer[1] !=BATTERY_STATE)
+    {
+        return 0;
+    }
+
+    uint32_t offset = 2;
+    char *flattened_data = (char *)data;
+    for(uint32_t i = 0; i < sizeof(umsg_battery_state_t);i++)
+    {
+        flattened_data[i] = buffer[offset];
+        offset++;
+    }
+
+    return 1;
+}

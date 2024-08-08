@@ -31,7 +31,7 @@ Prepare your topic .json file (see [topic definition]#Defining-messages) with yo
 Run:
 
 ```
-umsg-gen -d '\messages' -o '\umsg_lib'
+umsg-gen -d '\messages' -o '\umsg_lib' -l
 ```
 
 ## Add to CMake Project
@@ -236,6 +236,29 @@ typedef struct {
 ```
 
 All of the topic.json files should be grouped in a single directory. which are then passed to the umsg-gen generator.
+
+# Logging support
+The library has a logging support that can be enabled by -l, if you use this, you will get two new types of functions:
+
+```c
+uint32_t umsg_sensors_imu_serialize(umsg_sensors_imu_t* data, uint8_t* buffer);
+```
+This function will put the message into a buffer and will tell you how many bytes from the buffer were used, so you can log in onto an SD card or some other storage system.
+The message will be stored as (message class enum, message type enum, message). eg. (UMSG_SENSORS, SENSORS_IMU, struct umsg_sensors_imu_t). The endianity if dependent on the processor for now.
+
+```c
+uint8_t umsg_sensors_imu_deserialize(umsg_sensors_imu_t* data,uint8_t* buffer);
+```
+This function will put the message from a buffer back into struct and it will check if the message class and message type are correct for this type of message, it will also be indicated by the return value of the function.
+
+For now, it is assumed that there are no more than 256 message classes and no more than 256 types of message in a class, this constaint will be fixed in the future.
+
+This option also generated log_parser folder that contains cpp code and CMakeLists that when compiled is able to read the stored messages and write them to .csv files, the structure of the generated files is given as:
+
+```
+logfilename/message_class/message_type.csv;
+```
+
 
 # uMsg-Graph
 (Work in Progress)

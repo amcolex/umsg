@@ -36,5 +36,41 @@ uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data)
 {
     return umsg_peek(&msg_{{prefix}}, data, sizeof(umsg_{{prefix}}_t));
 }
+{%if log == "do_log" %}
+uint32_t umsg_{{prefix}}_serialize(umsg_{{prefix}}_t* data, uint8_t* buffer)
+{
+    uint32_t len = 2;
+    buffer[0] = UMSG_{{topic_dict.name.upper()}};
+    buffer[1] = {{topic_dict.name.upper()}}_{{msg_dict.name.upper()}};
+    char *flattened_data = (char *)data;
+    //this can probably be replaced by memcpy but it is done like this for now just to be safe
+    for(uint32_t i = 0; i < sizeof(umsg_{{prefix}}_t);i++)
+    {
+        buffer[len] = flattened_data[i];
+        len++;
+    }
+    return len;
+}
 
+//for now lets assume that there are less than 255 message classes and 255 message types per class, this has to be fixed in the future
+uint8_t umsg_{{prefix}}_deserialize(umsg_{{prefix}}_t* data,uint8_t* buffer)
+{
+    if(buffer[0]!=UMSG_{{topic_dict.name.upper()}} || buffer[1] !={{topic_dict.name.upper()}}_{{msg_dict.name.upper()}})
+    {
+        return 0;
+    }
+
+    uint32_t offset = 2;
+    char *flattened_data = (char *)data;
+    //this can probably be replaced by memcpy but it is done like this for now just to be safe
+    for(uint32_t i = 0; i < sizeof(umsg_{{prefix}}_t);i++)
+    {
+        flattened_data[i] = buffer[offset];
+        offset++;
+    }
+
+    return 1;
+}
+{% endif  %}
 {% endfor %}
+
