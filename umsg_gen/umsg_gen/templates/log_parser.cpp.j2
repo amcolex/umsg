@@ -172,8 +172,8 @@ int main(int argc, char *argv[]) {
 {%endfor%}
     while(file.tellg()!= std::filesystem::file_size(file_path))
     {
-        std::cout << "cursor at: " << file.tellg() << " from " << std::filesystem::file_size(file_path) << "\r";
         sort_msg(file);
+        std::cout << "cursor at: " << file.tellg() << " from " << std::filesystem::file_size(file_path) << "\r";
     }
 
     // close all the files
