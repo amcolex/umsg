@@ -59,7 +59,7 @@ void sort_{{dict.name}}_type(std::ifstream &file)
             {% endif %}
             {% if field.bitfield %}
             {%for bitfield in field.bitfield %}
-            file_{{dict.name}}_{{msg_dict.name}} << message->{{bitfield.name}}{% if not loop.last%} << ", "{% endif %};
+            file_{{dict.name}}_{{msg_dict.name}} << static_cast<int>(message->{{bitfield.name}}){% if not loop.last%} << ", "{% endif %};
             {%endfor%}
             {% endif %}
             {% endfor %}

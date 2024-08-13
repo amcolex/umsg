@@ -41,7 +41,7 @@ extern "C" {
 {%if topic_dict.enums %}
 
 {% for enum in topic_dict.enums%}
-typedef enum
+typedef enum __attribute__((__packed__))
 {
     {%for val in enum.enumerators%}
     {{val.upper()}}{{ "," if not loop.last else "" }}
