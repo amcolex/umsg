@@ -51,7 +51,14 @@ void sort_{{dict.name}}_type(std::ifstream &file)
             {% for field in msg_dict.fields %}
             {% if not field.bitfield %}
             {% if field.length %}
-            for(uint32_t i=0;i<{{field.length}}; i++){ file_{{dict.name}}_{{msg_dict.name}} << {% if field.type =="uint8"%} static_cast<int>(message->{{field.name}}[i]) {% else %}message->{{field.name}}[i] {% endif %}<< ", " ;}
+            for(uint32_t i=0;i<{{field.length}}; i++){
+            file_{{dict.name}}_{{msg_dict.name}} << {% if field.type =="uint8"%} static_cast<int>(message->{{field.name}}[i])
+            {% else %}message->{{field.name}}[i] {% endif %} ;
+            {%if loop.last%}
+            if(i<{{field.length}} - 1)
+            {%endif%}    
+                file_{{dict.name}}_{{msg_dict.name}} << ", ";
+            }
             {% endif %}
             {% if not field.length %}    
             file_{{dict.name}}_{{msg_dict.name}} << {% if field.type =="uint8"%} static_cast<int>(message->{{field.name}}) {% else %}message->{{field.name}}{% endif %}{% if not loop.last%} << ", "{% endif %};
