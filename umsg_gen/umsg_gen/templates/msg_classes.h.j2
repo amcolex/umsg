@@ -1,0 +1,22 @@
+// Generated with umsg_gen on {{ date }}
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <umsg_types.h>
+
+typedef enum
+{
+{% for val in headers%}
+{{val.upper()}}{{ "," if not loop.last else "" }}
+{%endfor%}
+} umsg_classes_t;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+
