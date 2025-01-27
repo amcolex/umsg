@@ -5,7 +5,9 @@ add_library(uMsgLib STATIC
     {% for src_name in sources %}
     src/{{ src_name }}
     {% endfor %}
+    src/umsg_classes.c
 )
+
 # select port
 if(NOT DEFINED UMSG_PORT)
     message(FATAL_ERROR "UMSG_PORT is not defined")

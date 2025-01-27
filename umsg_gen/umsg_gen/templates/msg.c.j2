@@ -2,11 +2,15 @@
 #include <umsg.h>
 #include <umsg_{{topic_dict.name}}.h>
 
+#include "umsg_classes.h"
+#include "umsg.h"
 // msg instances
 {% for msg_dict in topic_dict.msgs %}
 {% set prefix = topic_dict.name+'_'+msg_dict.name%}
 static umsg_msg_metadata_t msg_{{prefix}} = {.name = "{{prefix}}"};
 {% endfor %}
+
+extern umsg_msg_metadata_t msg_structured;
 
 // msg api's
 {% for msg_dict in topic_dict.msgs %}
@@ -23,6 +27,29 @@ umsg_sub_handle_t umsg_{{prefix}}_subscribe_ch(uint32_t prescaler, uint8_t lengt
 void umsg_{{prefix}}_publish(umsg_{{prefix}}_t* data)
 {
     umsg_publish(&msg_{{prefix}}, data, 0);
+
+
+    {%if msg_dict.log == 1 or msg_dict.transmit == 1 %}
+    uint32_t len = 8;
+    len+= sizeof(umsg_{{topic_dict.name}}_{{msg_dict.name}}_t) + 1;
+    umsg_MessageToTransfer M;
+    M.s.sync0 = 'M';
+    M.s.sync1 = 'R';
+    M.s.msg_class = UMSG_{{topic_dict.name.upper()}};
+    M.s.msg_type =  {{topic_dict.name.upper()}}_{{msg_dict.name.upper()}};
+    M.s.len = len;
+    M.s.{{topic_dict.name}}.{{msg_dict.name}} = *data;
+    
+    M.raw[len -1] = umsg_calcCRC((M.raw),len -1);
+    
+    {% endif %}
+    {%if msg_dict.transmit == 1%}
+    umsg_publish_structured_to_transmit(&M);
+    {% endif %}
+    {%if msg_dict.log == 1 %}
+    umsg_publish_structured_to_log(&M);
+    {% endif %}
+    
 }
 void umsg_{{prefix}}_publish_ch(umsg_{{prefix}}_t* data, uint8_t channel)
 {
@@ -36,5 +63,5 @@ uint8_t umsg_{{prefix}}_peek(umsg_{{prefix}}_t* data)
 {
     return umsg_peek(&msg_{{prefix}}, data, sizeof(umsg_{{prefix}}_t));
 }
-
 {% endfor %}
+

@@ -18,4 +18,4 @@ typedef void* umsg_sub_handle_t;
 }
 #endif
 
-#endif //UMSG_UMSG_TYPES_H
+#endif  // UMSG_UMSG_TYPES_H
